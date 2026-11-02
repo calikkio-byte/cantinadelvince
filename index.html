@@ -1,5023 +1,1805 @@
 <!DOCTYPE html>
-<html lang="it" data-theme="dark">
+<html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enoteca del Corso — Catalogo Vini</title>
-<link href="https://api.fontshare.com/v2/css?f[]=cormorant@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
-<style>
-:root {
-  --font-display: 'Cormorant', 'Georgia', serif;
-  --font-body: 'Satoshi', 'Inter', sans-serif;
-  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
-  --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
-  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-  --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
-  --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
-  --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
-  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
-  --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem;
-  --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
-  --space-16: 4rem;
-  --radius-sm: 0.375rem; --radius-md: 0.5rem;
-  --radius-lg: 0.75rem; --radius-xl: 1rem; --radius-full: 9999px;
-  --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
-  --content-wide: 1400px;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carta dei Vini &amp; Cantina — Catalogo Interattivo Completo (451 Referenze)</title>
+  <style>
+    :root {
+      --bg: #faf7f2;
+      --surface: #ffffff;
+      --surface-alt: #f4efe6;
+      --border: #e4dccf;
+      --border-strong: #cfc2b0;
+      --text: #1f1a17;
+      --text-muted: #6e6259;
+      --accent: #6b1d2f;
+      --accent-hover: #521422;
+      --accent-soft: #f7ebee;
+      --gold: #b08d57;
+      --gold-soft: #fbf6ec;
+      --bollicine-bg: #fdf6e2;
+      --bollicine-fg: #8a6415;
+      --bianco-bg: #f1f7e8;
+      --bianco-fg: #3b6622;
+      --rosso-bg: #fae8ec;
+      --rosso-fg: #7a1c30;
+      --rosato-bg: #fceef2;
+      --rosato-fg: #a63a5b;
+      --dolce-bg: #fff0d9;
+      --dolce-fg: #9c5708;
+      --distillato-bg: #ede8f5;
+      --distillato-fg: #4e3578;
+      --shadow-sm: 0 2px 6px rgba(31, 26, 23, 0.05);
+      --shadow-md: 0 8px 24px rgba(31, 26, 23, 0.09);
+      --radius: 10px;
+    }
 
-[data-theme="dark"] {
-  --color-bg: #0e0d0b;
-  --color-surface: #141310;
-  --color-surface-2: #1a1916;
-  --color-surface-offset: #201e1b;
-  --color-border: #2e2c28;
-  --color-divider: #252320;
-  --color-text: #e8e4dc;
-  --color-text-muted: #9a9690;
-  --color-text-faint: #5a5850;
-  --color-accent: #c8a84b;
-  --color-accent-hover: #dfc068;
-  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.3);
-  --shadow-md: 0 4px 16px oklch(0 0 0 / 0.4);
-  --shadow-lg: 0 12px 40px oklch(0 0 0 / 0.5);
-}
-[data-theme="light"] {
-  --color-bg: #f5f1ea;
-  --color-surface: #faf7f2;
-  --color-surface-2: #fff;
-  --color-surface-offset: #ede8df;
-  --color-border: #d4cfc5;
-  --color-divider: #e0dbd2;
-  --color-text: #1a1814;
-  --color-text-muted: #6b6760;
-  --color-text-faint: #a8a49e;
-  --color-accent: #8B5E1A;
-  --color-accent-hover: #a06d20;
-  --shadow-sm: 0 1px 3px oklch(0.2 0.01 80 / 0.08);
-  --shadow-md: 0 4px 16px oklch(0.2 0.01 80 / 0.1);
-  --shadow-lg: 0 12px 40px oklch(0.2 0.01 80 / 0.14);
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-body {
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  color: var(--color-text);
-  background: var(--color-bg);
-  min-height: 100dvh;
-  line-height: 1.6;
-}
-img, svg { display: block; }
-button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
 
-/* HEADER */
-header {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
-  backdrop-filter: blur(12px);
-  padding: var(--space-4) var(--space-6);
-  display: flex; align-items: center; justify-content: space-between;
-  gap: var(--space-4);
-}
-.logo {
-  display: flex; align-items: center; gap: var(--space-3);
-}
-.logo-svg { color: var(--color-accent); }
-.logo-text {
-  font-family: var(--font-display);
-  font-size: var(--text-lg);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--color-text);
-  line-height: 1;
-}
-.logo-sub {
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-family: var(--font-body);
-}
-.theme-toggle {
-  width: 40px; height: 40px;
-  border-radius: var(--radius-md);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--color-text-muted);
-  transition: background var(--transition), color var(--transition);
-}
-.theme-toggle:hover { background: var(--color-surface-offset); color: var(--color-text); }
+    /* Header */
+    .top-header {
+      background: linear-gradient(135deg, #3a0d18 0%, #6b1d2f 60%, #4a1220 100%);
+      color: #fff;
+      padding: 24px 28px;
+      border-bottom: 3px solid var(--gold);
+      box-shadow: var(--shadow-md);
+    }
 
-/* HERO */
-.hero {
-  padding: var(--space-12) var(--space-6) var(--space-10);
-  text-align: center;
-  background: linear-gradient(in oklab, var(--color-bg) 0%, var(--color-surface) 100%);
-  border-bottom: 1px solid var(--color-divider);
-  position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 50% at 50% 100%, oklch(from var(--color-accent) l c h / 0.08), transparent);
-  pointer-events: none;
-}
-.hero-eyebrow {
-  font-size: var(--text-xs);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: var(--space-3);
-  font-family: var(--font-body);
-}
-.hero h1 {
-  font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: 600;
-  line-height: 1.1;
-  color: var(--color-text);
-  margin-bottom: var(--space-3);
-}
-.hero-sub {
-  color: var(--color-text-muted);
-  font-size: var(--text-sm);
-  max-width: 50ch;
-  margin: 0 auto;
-}
+    .header-inner {
+      max-width: 1560px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
 
-/* CONTROLS */
-.controls {
-  max-width: var(--content-wide);
-  margin: 0 auto;
-  padding: var(--space-6) var(--space-6) var(--space-4);
-  display: flex; flex-direction: column; gap: var(--space-4);
-}
-.search-wrap {
-  position: relative;
-}
-.search-icon {
-  position: absolute; left: var(--space-4); top: 50%; transform: translateY(-50%);
-  color: var(--color-text-faint); pointer-events: none;
-}
-#search {
-  width: 100%;
-  padding: var(--space-3) var(--space-4) var(--space-3) calc(var(--space-4) + 20px + var(--space-2));
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  color: var(--color-text);
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  transition: border-color var(--transition), box-shadow var(--transition);
-  outline: none;
-}
-#search:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px oklch(from var(--color-accent) l c h / 0.15); }
-#search::placeholder { color: var(--color-text-faint); }
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
 
-.filters {
-  display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center;
-}
-.filter-btn {
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-full);
-  font-size: var(--text-xs);
-  font-family: var(--font-body);
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  border: 1px solid var(--color-border);
-  color: var(--color-text-muted);
-  background: var(--color-surface);
-  transition: all var(--transition);
-  white-space: nowrap;
-}
-.filter-btn:hover { border-color: var(--color-accent); color: var(--color-text); }
-.filter-btn.active {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: #0e0d0b;
-  font-weight: 700;
-}
-.count-bar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 var(--space-6);
-  max-width: var(--content-wide);
-  margin: 0 auto var(--space-4);
-}
-.count-text {
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.count-num { color: var(--color-accent); font-weight: 700; }
+    .brand-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
 
-/* GRID */
-.grid-container {
-  max-width: var(--content-wide);
-  margin: 0 auto;
-  padding: 0 var(--space-6) var(--space-16);
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
-  gap: var(--space-4);
-}
+    .brand-title h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
 
-/* CARD */
-.card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
-  display: flex; flex-direction: column;
-  box-shadow: var(--shadow-sm);
-}
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-  border-color: oklch(from var(--color-accent) l c h / 0.4);
-}
-.card-stripe {
-  height: 4px;
-  width: 100%;
-  flex-shrink: 0;
-}
-.card-body {
-  padding: var(--space-5) var(--space-5) var(--space-4);
-  display: flex; flex-direction: column; gap: var(--space-3);
-  flex: 1;
-}
-.card-id {
-  font-size: var(--text-xs);
-  color: var(--color-text-faint);
-  font-family: var(--font-body);
-  letter-spacing: 0.08em;
-  font-weight: 500;
-}
-.card-name {
-  font-family: var(--font-display);
-  font-size: clamp(1.05rem, 1rem + 0.3vw, 1.4rem);
-  font-weight: 600;
-  line-height: 1.2;
-  color: var(--color-text);
-  text-wrap: balance;
-}
-.card-divider {
-  height: 1px;
-  background: var(--color-divider);
-  margin: 0;
-}
-.card-meta {
-  display: flex; flex-direction: column; gap: var(--space-2);
-}
-.card-row {
-  display: flex; align-items: flex-start; gap: var(--space-2);
-}
-.card-row-icon {
-  width: 16px; height: 16px; flex-shrink: 0;
-  margin-top: 2px;
-  color: var(--color-text-faint);
-}
-.card-row-label {
-  font-size: var(--text-xs);
-  color: var(--color-text-faint);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 500;
-  min-width: 52px;
-  flex-shrink: 0;
-}
-.card-row-value {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  line-height: 1.4;
-}
-.type-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  padding: 2px var(--space-2);
-  border-radius: var(--radius-full);
-  font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  border: 1px solid currentColor;
-}
+    .brand-subtitle {
+      font-size: 0.86rem;
+      color: rgba(255, 255, 255, 0.82);
+      margin-top: 2px;
+    }
 
-/* NO RESULTS */
-.no-results {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: var(--space-16) var(--space-8);
-  color: var(--color-text-muted);
-}
-.no-results-icon { font-size: 3rem; margin-bottom: var(--space-4); }
-.no-results h3 { font-family: var(--font-display); font-size: var(--text-xl); margin-bottom: var(--space-2); color: var(--color-text); }
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
 
-/* RESPONSIVE */
-@media (max-width: 640px) {
-  header { padding: var(--space-3) var(--space-4); }
-  .hero { padding: var(--space-8) var(--space-4) var(--space-6); }
-  .controls { padding: var(--space-4); }
-  .count-bar { padding: 0 var(--space-4); }
-  .grid-container { padding: 0 var(--space-4) var(--space-12); gap: var(--space-3); }
-}
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 15px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      text-decoration: none;
+      transition: all 0.16s ease;
+      white-space: nowrap;
+    }
 
-/* FOOTER */
-footer {
-  border-top: 1px solid var(--color-divider);
-  padding: var(--space-6);
-  text-align: center;
-  font-size: var(--text-xs);
-  color: var(--color-text-faint);
-  font-family: var(--font-body);
-  letter-spacing: 0.06em;
-}
-</style>
+    .btn-gold {
+      background: var(--gold);
+      color: #fff;
+    }
+    .btn-gold:hover {
+      background: #9a7844;
+    }
+
+    .btn-outline-light {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    .btn-outline-light:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border-color: var(--border-strong);
+    }
+    .btn-secondary:hover {
+      background: var(--surface-alt);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 20px 24px;
+    }
+
+    /* Macro-Tipologia Pills */
+    .macro-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+      align-items: center;
+    }
+
+    .macro-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .macro-pill:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .macro-pill.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .macro-pill .count {
+      background: var(--surface-alt);
+      color: var(--text-muted);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .macro-pill.active .count {
+      background: rgba(255, 255, 255, 0.22);
+      color: #fff;
+    }
+
+    /* Filters Card */
+    .filters-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+    }
+
+    .search-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 14px;
+      align-items: center;
+    }
+
+    .search-box {
+      flex: 1 1 340px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 11px 16px 11px 40px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border-strong);
+      font-size: 0.94rem;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent);
+      background: #fff;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1rem;
+      pointer-events: none;
+    }
+
+    .filters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+      gap: 12px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .filter-group label {
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+    }
+
+    .filter-group select {
+      padding: 8px 10px;
+      border-radius: 7px;
+      border: 1px solid var(--border-strong);
+      background: #fff;
+      font-size: 0.85rem;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .filter-group select:focus {
+      border-color: var(--accent);
+    }
+
+    /* Active filter tags & Toolbar */
+    .toolbar-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .results-status {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+    }
+
+    .results-status strong {
+      color: var(--accent);
+      font-size: 1.05rem;
+    }
+
+    .active-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(107, 29, 47, 0.25);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .filter-chip:hover {
+      background: #efd5dc;
+    }
+
+    .view-switcher {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .view-btn {
+      padding: 7px 13px;
+      border-radius: 7px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .view-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge-bollicine { background: var(--bollicine-bg); color: var(--bollicine-fg); border: 1px solid #ecd99e; }
+    .badge-bianco    { background: var(--bianco-bg); color: var(--bianco-fg); border: 1px solid #c5dfb4; }
+    .badge-rosso     { background: var(--rosso-bg); color: var(--rosso-fg); border: 1px solid #ebbfc9; }
+    .badge-rosato    { background: var(--rosato-bg); color: var(--rosato-fg); border: 1px solid #f2c4d2; }
+    .badge-dolce     { background: var(--dolce-bg); color: var(--dolce-fg); border: 1px solid #f5d29c; }
+    .badge-distillato{ background: var(--distillato-bg); color: var(--distillato-fg); border: 1px solid #cfc2e8; }
+
+    .badge-format {
+      background: var(--surface-alt);
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+      font-weight: 600;
+    }
+
+    .badge-format.special {
+      background: var(--gold-soft);
+      color: #7d5b21;
+      border-color: #dec28e;
+      font-weight: 700;
+    }
+
+    /* Table View */
+    .table-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow-x: auto;
+    }
+
+    table.wine-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      text-align: left;
+    }
+
+    table.wine-table thead th {
+      background: #3d121d;
+      color: #fff;
+      padding: 12px 12px;
+      font-weight: 600;
+      font-size: 0.77rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    table.wine-table thead th:hover {
+      background: #551929;
+    }
+
+    table.wine-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+    }
+
+    table.wine-table tbody tr:hover {
+      background: #fdfaf5;
+    }
+
+    table.wine-table td {
+      padding: 11px 12px;
+      vertical-align: top;
+    }
+
+    .wine-name-cell {
+      font-weight: 700;
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 0.92rem;
+    }
+    .wine-name-cell:hover {
+      text-decoration: underline;
+    }
+
+    .wine-orig-sub {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .producer-cell {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .region-main {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .zone-sub {
+      font-size: 0.77rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .denom-tag {
+      display: inline-block;
+      margin-top: 3px;
+      font-size: 0.73rem;
+      color: #5c4938;
+      background: var(--surface-alt);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .uvaggio-cell {
+      max-width: 240px;
+      font-size: 0.82rem;
+    }
+
+    .profilo-cell {
+      max-width: 310px;
+      font-size: 0.8rem;
+      color: #423933;
+    }
+
+    .price-input-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg);
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      padding: 3px 7px;
+      width: 88px;
+    }
+
+    .price-input-wrap.has-price {
+      background: #fff;
+      border-color: var(--gold);
+    }
+
+    .price-input-wrap span {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 0.82rem;
+    }
+
+    .price-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-weight: 700;
+      font-size: 0.86rem;
+      color: var(--text);
+      text-align: right;
+      outline: none;
+    }
+
+    /* Cards Grid View */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px;
+    }
+
+    .wine-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+
+    .wine-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--gold);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-family: Georgia, serif;
+      font-size: 1.06rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 3px;
+    }
+
+    .card-producer {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .card-meta-list {
+      font-size: 0.81rem;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 10px 0;
+      border-top: 1px dashed var(--border);
+      border-bottom: 1px dashed var(--border);
+      margin-bottom: 10px;
+    }
+
+    .card-meta-list div strong {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .card-note {
+      font-size: 0.8rem;
+      color: #4a3f37;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 6px;
+    }
+
+    .card-price {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    /* Carta dei Vini (Menu View) */
+    .menu-view {
+      background: #fffdf9;
+      border: 2px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 36px 44px;
+      max-width: 1120px;
+      margin: 0 auto;
+      box-shadow: var(--shadow-md);
+    }
+
+    .menu-header {
+      text-align: center;
+      border-bottom: 2px double var(--gold);
+      padding-bottom: 20px;
+      margin-bottom: 28px;
+    }
+
+    .menu-header h2 {
+      font-family: Georgia, serif;
+      font-size: 2rem;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .menu-section-title {
+      font-family: Georgia, serif;
+      font-size: 1.4rem;
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 6px;
+      margin: 28px 0 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .menu-region-title {
+      font-family: Georgia, serif;
+      font-size: 1.08rem;
+      color: #6b4c2b;
+      margin: 18px 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 14px;
+      padding: 7px 0;
+      border-bottom: 1px dotted var(--border-strong);
+      cursor: pointer;
+    }
+
+    .menu-item:hover {
+      background: var(--gold-soft);
+    }
+
+    .menu-item-left {
+      flex: 1;
+    }
+
+    .menu-wine-title {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .menu-wine-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .menu-item-right {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      white-space: nowrap;
+    }
+
+    .menu-vintage {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      min-width: 45px;
+      text-align: center;
+    }
+
+    .menu-price {
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 65px;
+      text-align: right;
+      font-size: 0.95rem;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 14, 12, 0.62);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--surface);
+      border-radius: 14px;
+      max-width: 720px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--gold);
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, #3a0d18, #6b1d2f);
+      color: #fff;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .modal-header h3 {
+      font-family: Georgia, serif;
+      font-size: 1.35rem;
+    }
+
+    .modal-close {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 22px 24px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .detail-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 10px 13px;
+      border-radius: 8px;
+    }
+
+    .detail-box .lbl {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .detail-box .val {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .detail-section {
+      background: var(--gold-soft);
+      border-left: 4px solid var(--gold);
+      padding: 12px 15px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .detail-section h4 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      color: #7d5b21;
+      margin-bottom: 4px;
+    }
+
+    @media print {
+      .top-header, .macro-bar, .filters-panel, .toolbar-row, .no-print {
+        display: none !important;
+      }
+      body {
+        background: #fff;
+        padding: 0;
+      }
+      .menu-view {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">
-    <svg class="logo-svg" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="Logo">
-      <path d="M16 4 C10 4 7 9 7 14 C7 19 10 23 16 28 C22 23 25 19 25 14 C25 9 22 4 16 4Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-      <path d="M16 9 L16 22 M12 13 C13.5 14.5 18.5 14.5 20 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-    </svg>
-    <div>
-      <div class="logo-text">Enoteca del Corso</div>
-      <div class="logo-sub">Catalogo Enologico</div>
+  <!-- Header -->
+  <header class="top-header">
+    <div class="header-inner">
+      <div class="brand-title">
+        <div class="brand-icon">🍷</div>
+        <div>
+          <h1>Carta dei Vini &amp; Sommelier Manager</h1>
+          <div class="brand-subtitle">
+            451 Referenze Uniche Consolidate (479 righe iniziali − 28 duplicati esatti accorpati) • 100% Schede Tecniche Complete
+          </div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-outline-light" onclick="openDuplicatesModal()">
+          📋 Report Consolidamento &amp; 28 Duplicati
+        </button>
+        <button class="btn btn-outline-light" onclick="openAddWineModal()">
+          ➕ Aggiungi Vino
+        </button>
+        <button class="btn btn-gold" onclick="exportUpdatedCSV()">
+          ⬇️ Scarica CSV (con Prezzi)
+        </button>
+        <a class="btn btn-gold" href="catalogo_vini_completo.xlsx" download="catalogo_vini_completo.xlsx">
+          📊 Scarica Excel (.xlsx)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Macro-Tipologia Quick Filter Bar -->
+    <div class="macro-bar" id="macroBar"></div>
+
+    <!-- Multi-Parameter Filter Panel -->
+    <section class="filters-panel">
+      <div class="search-row">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Cerca per nome vino, cantina, cru (es. Sassicaia, Bussia, Montalcino, Krug, Etna, Timorasso, Anfora)..."
+            oninput="applyFilters()"
+          />
+        </div>
+        <button class="btn btn-secondary" onclick="resetAllFilters()">
+          ↺ Azzera Filtri
+        </button>
+      </div>
+
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label for="fCategoria">Categoria / Stile</label>
+          <select id="fCategoria" onchange="applyFilters()"></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="fNazione">Nazione</label>
+          <select id="fNazione" onchange="onNazioneChange()"></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="fRegione">Regione</label>
+          <select id="fRegione" onchange="onRegioneChange()"></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="fZona">Zona / Sottozona / Cru</label>
+          <select id="fZona" onchange="applyFilters()"></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="fDenominazione">Denominazione</label>
+          <select id="fDenominazione" onchange="applyFilters()"></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="fProduttore">Produttore / Cantina</label>
+          <select id="fProduttore" onchange="applyFilters()"></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="fVitigno">Vitigno Principale</label>
+          <select id="fVitigno" onchange="applyFilters()"></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="fAnnata">Annata / Millesimo</label>
+          <select id="fAnnata" onchange="applyFilters()"></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="fFormato">Formato Bottiglia</label>
+          <select id="fFormato" onchange="applyFilters()"></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="fPrezzo">Fascia di Prezzo (€)</label>
+          <select id="fPrezzo" onchange="applyFilters()">
+            <option value="">Tutti i vini (con e senza prezzo)</option>
+            <option value="WITH_PRICE">Solo vini con prezzo inserito</option>
+            <option value="NO_PRICE">Solo vini senza prezzo (da prezzare)</option>
+            <option value="0-50">Fino a 50 €</option>
+            <option value="51-100">Da 51 € a 100 €</option>
+            <option value="101-250">Da 101 € a 250 €</option>
+            <option value="251-99999">Oltre 250 € (Grandi Bottiglie)</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="fSort">Ordina Per</label>
+          <select id="fSort" onchange="applyFilters()">
+            <option value="carta">Ordine Carta dei Vini (Tipologia → Regione)</option>
+            <option value="nome_asc">Nome Vino (A → Z)</option>
+            <option value="prod_asc">Produttore / Cantina (A → Z)</option>
+            <option value="regione_asc">Regione &amp; Zona (A → Z)</option>
+            <option value="prezzo_asc">Prezzo (Crescente ↑)</option>
+            <option value="prezzo_desc">Prezzo (Decrescente ↓)</option>
+            <option value="annata_desc">Annata (Più recente → Storica)</option>
+            <option value="annata_asc">Annata (Storica → Più recente)</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Status & View Switcher -->
+    <div class="toolbar-row">
+      <div class="results-status">
+        <span>Visualizzati <strong id="shownCount">0</strong> su <span id="totalCount">0</span> vini</span>
+        <div class="active-tags" id="activeTags"></div>
+      </div>
+
+      <div class="view-switcher">
+        <button class="view-btn active" id="btnViewTable" onclick="setViewMode('table')">📋 Tabella Interattiva</button>
+        <button class="view-btn" id="btnViewCards" onclick="setViewMode('cards')">🗂️ Schede Sommelier</button>
+        <button class="view-btn" id="btnViewMenu" onclick="setViewMode('menu')">📖 Carta Ristorante / Stampa</button>
+      </div>
+    </div>
+
+    <!-- Dynamic Content Area -->
+    <div id="contentArea"></div>
+  </main>
+
+  <!-- Wine Detail Modal -->
+  <div class="modal-backdrop" id="wineModal" onclick="if(event.target===this) closeWineModal()">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <div id="modalBadges" style="margin-bottom:6px;display:flex;gap:6px;flex-wrap:wrap;"></div>
+          <h3 id="modalTitle">Nome Vino</h3>
+          <div id="modalSubtitle" style="font-size:0.92rem;opacity:0.9;margin-top:2px;">Produttore</div>
+        </div>
+        <button class="modal-close" onclick="closeWineModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
     </div>
   </div>
-  <button class="theme-toggle" data-theme-toggle aria-label="Cambia tema">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-  </button>
-</header>
 
-<section class="hero">
-  <p class="hero-eyebrow">Inventario Tecnico Completo</p>
-  <h1>Catalogo Vini & Distillati</h1>
-  <p class="hero-sub">645 referenze selezionate — vini iconici, champagne, spumanti, distillati e rarità da collezione</p>
-</section>
-
-<div class="controls">
-  <div class="search-wrap">
-    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="search" id="search" placeholder="Cerca per nome, cantina o uvaggio…" autocomplete="off">
-  </div>
-  <div class="filters" id="filters">
-    <button class="filter-btn active" data-filter="all">Tutti</button>
-    <button class="filter-btn" data-filter="Rosso">🔴 Rosso</button>
-    <button class="filter-btn" data-filter="Bianco">🟡 Bianco</button>
-    <button class="filter-btn" data-filter="Champagne">✨ Champagne</button>
-    <button class="filter-btn" data-filter="Spumante">🫧 Spumante</button>
-    <button class="filter-btn" data-filter="Rosé">🌸 Rosé</button>
-    <button class="filter-btn" data-filter="Distillato">🥃 Distillato</button>
-    <button class="filter-btn" data-filter="Dolce">🍯 Dolce</button>
-  </div>
-</div>
-
-<div class="count-bar">
-  <span class="count-text">Visualizzati: <span class="count-num" id="count">645</span> vini</span>
-</div>
-
-<div class="grid-container" id="grid"></div>
-
-<footer>
-  Enoteca del Corso &mdash; Inventario V-1 / V-645 &mdash; Aggiornato 2026
-</footer>
-
-<script>
-const wines = [
-  {
-    "id": 1,
-    "name": "50-50 Rosso 2018 75cl Avignonesi 50-50",
-    "type": "Rosso",
-    "winery": "Avignonesi & Capannelle",
-    "grapes": "50% Sangiovese, 50% Merlot."
-  },
-  {
-    "id": 2,
-    "name": "60 Mesi Bianco 75cl Casa Caterina",
-    "type": "Spumante",
-    "winery": "Casa Caterina",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 3,
-    "name": "Alta Langa Bianco 75cl Coppo 2021",
-    "type": "Spumante",
-    "winery": "Coppo",
-    "grapes": "Chardonnay e Pinot Nero."
-  },
-  {
-    "id": 4,
-    "name": "Alta Langa Rose 75cl Valentino 2017",
-    "type": "Spumante",
-    "winery": "Valentino",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 5,
-    "name": "Altemasi Riserva Gral 2011 bianco 75cl",
-    "type": "Spumante",
-    "winery": "Altemasi",
-    "grapes": "Chardonnay e Pinot Nero."
-  },
-  {
-    "id": 6,
-    "name": "Alteni Di Brassica Bianco 2021 75cl Gaja",
-    "type": "Bianco",
-    "winery": "Gaja",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 7,
-    "name": "Amarone Rosso 2000 75cl Villa Rinaldi",
-    "type": "Rosso",
-    "winery": "Villa Rinaldi",
-    "grapes": "Corvina, Rondinella, Molinara."
-  },
-  {
-    "id": 8,
-    "name": "Amarone Rosso 2018 150cl Boni Alessandro",
-    "type": "Rosso",
-    "winery": "Boni Alessandro",
-    "grapes": "Corvina, Rondinella, Molinara."
-  },
-  {
-    "id": 9,
-    "name": "Angelo Negro Rosso 75cl Barbaresco 2016",
-    "type": "Rosso",
-    "winery": "Angelo Negro",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 10,
-    "name": "Arberesko Rosso 2021 75cl San Martino",
-    "type": "Rosso",
-    "winery": "San Martino",
-    "grapes": "100% Aglianico."
-  },
-  {
-    "id": 11,
-    "name": "Arione 2016 75cl Campo Alla Sughera",
-    "type": "Rosso",
-    "winery": "Campo Alla Sughera",
-    "grapes": "Cabernet Sauvignon e Merlot."
-  },
-  {
-    "id": 12,
-    "name": "Arione 2017 75cl Campo Alla Sughera",
-    "type": "Rosso",
-    "winery": "Campo Alla Sughera",
-    "grapes": "Cabernet Sauvignon e Merlot."
-  },
-  {
-    "id": 13,
-    "name": "Arione 2018 75cl Campo Alla Sughera",
-    "type": "Rosso",
-    "winery": "Campo Alla Sughera",
-    "grapes": "Cabernet Sauvignon e Merlot."
-  },
-  {
-    "id": 14,
-    "name": "Arisos Kerner Bianco 2023 75cl Valle Isarco",
-    "type": "Bianco",
-    "winery": "Valle Isarco",
-    "grapes": "100% Kerner."
-  },
-  {
-    "id": 15,
-    "name": "Armagnac Jean Cave 200cl",
-    "type": "Distillato",
-    "winery": "Jean Cave",
-    "grapes": "Blend di uve bianche locali."
-  },
-  {
-    "id": 16,
-    "name": "Arnione Rosso 2019 75cl Campo Alla Sughera",
-    "type": "Rosso",
-    "winery": "Campo Alla Sughera",
-    "grapes": "Cabernet Sauvignon, Merlot, Petit Verdot, Cabernet Franc."
-  },
-  {
-    "id": 17,
-    "name": "Baffo Nero Rosso 2019 75cl Rocca Di Frassinello",
-    "type": "Rosso",
-    "winery": "Rocca Di Frassinello",
-    "grapes": "100% Merlot."
-  },
-  {
-    "id": 18,
-    "name": "Barbaresco Asili Riserva Rosso 2020 75cl Bruno giacosa",
-    "type": "Rosso",
-    "winery": "Bruno Giacosa",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 19,
-    "name": "Barbaresco Asili Rosso 2022 75cl Bruno giacosa",
-    "type": "Rosso",
-    "winery": "Bruno Giacosa",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 20,
-    "name": "Barbaresco Cipressi Rosso 75cl Michele Chiarlo",
-    "type": "Rosso",
-    "winery": "Michele Chiarlo",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 21,
-    "name": "Barbaresco Rabaja Rosso 2021 75cl Bruno Rocca",
-    "type": "Rosso",
-    "winery": "Bruno Rocca",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 22,
-    "name": "Barbaresco Rosso 2018 75cl Produttori Di Barbaresco",
-    "type": "Rosso",
-    "winery": "Produttori del Barbaresco",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 23,
-    "name": "Barbaresco Rosso 2019 75cl Produttori Di Barbaresco",
-    "type": "Rosso",
-    "winery": "Produttori del Barbaresco",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 24,
-    "name": "Barbaresco Rosso 2019 75cl Gaja",
-    "type": "Rosso",
-    "winery": "Gaja",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 25,
-    "name": "Barbaresco Rosso 2020 75cl Gaja",
-    "type": "Rosso",
-    "winery": "Gaja",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 26,
-    "name": "Barbera D Alba Francia Rosso 2022 75cl Conterno",
-    "type": "Rosso",
-    "winery": "Giacomo Conterno",
-    "grapes": "100% Barbera."
-  },
-  {
-    "id": 27,
-    "name": "Barbera pomorosso 900cl coppo",
-    "type": "Rosso",
-    "winery": "Coppo",
-    "grapes": "100% Barbera."
-  },
-  {
-    "id": 28,
-    "name": "Barbera Rosso 75cl Massolino 2023",
-    "type": "Rosso",
-    "winery": "Massolino",
-    "grapes": "100% Barbera."
-  },
-  {
-    "id": 29,
-    "name": "Barbera Rosso 2022 75cl Bruno Giacosa",
-    "type": "Rosso",
-    "winery": "Bruno Giacosa",
-    "grapes": "100% Barbera."
-  },
-  {
-    "id": 30,
-    "name": "Barbera Rosso 2023 75cl Bruno Giacosa",
-    "type": "Rosso",
-    "winery": "Bruno Giacosa",
-    "grapes": "100% Barbera."
-  },
-  {
-    "id": 31,
-    "name": "barbera trevie Vietti 2022",
-    "type": "Rosso",
-    "winery": "Vietti",
-    "grapes": "100% Barbera."
-  },
-  {
-    "id": 32,
-    "name": "Barbera Vigna Martina Rosso 2023 75cl Elio Grasso",
-    "type": "Rosso",
-    "winery": "Elio Grasso",
-    "grapes": "100% Barbera."
-  },
-  {
-    "id": 33,
-    "name": "Barolo Vigna Runcot Rosso 2016 150cl Elio Grasso",
-    "type": "Rosso",
-    "winery": "Elio Grasso",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 34,
-    "name": "Barbera Vigna Runcot Rosso 2016 75cl Elio Grasso",
-    "type": "Rosso",
-    "winery": "Elio Grasso",
-    "grapes": "100% Barbera."
-  },
-  {
-    "id": 35,
-    "name": "Barolo 2020 Rosso 75cl Massolino",
-    "type": "Rosso",
-    "winery": "Massolino",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 36,
-    "name": "Barolo bussia Rosso 2015 150cl Marrone",
-    "type": "Rosso",
-    "winery": "Marrone",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 37,
-    "name": "Barolo bussia Rosso 2016 150cl Marrone",
-    "type": "Rosso",
-    "winery": "Marrone",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 38,
-    "name": "Barolo bussia Rosso 2016 75cl Marrone",
-    "type": "Rosso",
-    "winery": "Marrone",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 39,
-    "name": "Barolo bussia Rosso 2017 150cl Marrone",
-    "type": "Rosso",
-    "winery": "Marrone",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 40,
-    "name": "Barolo bussia Rosso 2017 75cl Marrone",
-    "type": "Rosso",
-    "winery": "Marrone",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 41,
-    "name": "Barolo bussia Rosso 2018 75cl Marrone",
-    "type": "Rosso",
-    "winery": "Marrone",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 42,
-    "name": "Barolo bussia Rosso 2019 75cl Marrone",
-    "type": "Rosso",
-    "winery": "Marrone",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 43,
-    "name": "Barolo Dagromis Rosso 2018 75cl Gaja",
-    "type": "Rosso",
-    "winery": "Gaja",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 44,
-    "name": "Barolo Dagromis Rosso 2019 75cl Gaja",
-    "type": "Rosso",
-    "winery": "Gaja",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 45,
-    "name": "Barolo Falletto Rosso 2020 75cl Bruno Giacosa",
-    "type": "Rosso",
-    "winery": "Bruno Giacosa",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 46,
-    "name": "Barolo Falletto Rosso 2021 75cl Bruno Giacosa",
-    "type": "Rosso",
-    "winery": "Bruno Giacosa",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 47,
-    "name": "Barolo Francia 2020 Rosso 75cl Conterno",
-    "type": "Rosso",
-    "winery": "Giacomo Conterno",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 48,
-    "name": "Barolo Gavarini Chiniera Rosso 2020 150cl Elio Grasso",
-    "type": "Rosso",
-    "winery": "Elio Grasso",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 49,
-    "name": "Barolo Gavarini Chiniera Rosso 2020 75cl Elio Grasso",
-    "type": "Rosso",
-    "winery": "Elio Grasso",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 50,
-    "name": "Barolo Ginestra Case Mate Rosso 2020 150cl Elio Grasso",
-    "type": "Rosso",
-    "winery": "Elio Grasso",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 51,
-    "name": "Barolo Ginestra Case Mate Rosso 2020 75cl Elio Grasso",
-    "type": "Rosso",
-    "winery": "Elio Grasso",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 52,
-    "name": "Barolo Mosconi Rosso 2020 75cl Pio Cesare",
-    "type": "Rosso",
-    "winery": "Pio Cesare",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 53,
-    "name": "Barolo Parussi Rosso 75cl Massolino 2020",
-    "type": "Rosso",
-    "winery": "Massolino",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 54,
-    "name": "Barolo Rosso 75cl Pio Cesare 2020",
-    "type": "Rosso",
-    "winery": "Pio Cesare",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 55,
-    "name": "barolo Vietti 2016 75cl Rosso",
-    "type": "Rosso",
-    "winery": "Vietti",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 56,
-    "name": "barolo Vietti 2017 75cl Rosso",
-    "type": "Rosso",
-    "winery": "Vietti",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 57,
-    "name": "barolo Vietti 2019 75cl Rosso",
-    "type": "Rosso",
-    "winery": "Vietti",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 58,
-    "name": "Barolo Vigna Rionda etichetta nera 2016 Rosso 75cl Massolino",
-    "type": "Rosso",
-    "winery": "Massolino",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 59,
-    "name": "Baron de L Baron de 2019Ladoucette 2022 Bianco",
-    "type": "Bianco",
-    "winery": "Baron de Ladoucette",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 60,
-    "name": "Baron de L Baron de Ladoucette 2022 Bianco",
-    "type": "Bianco",
-    "winery": "Baron de Ladoucette",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 61,
-    "name": "Baron De L Bianco 2018 75cl Baron De Ladoucette",
-    "type": "Bianco",
-    "winery": "Baron de Ladoucette",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 62,
-    "name": "Baron De L Bianco 2020 75cl Baron De Ladoucette",
-    "type": "Bianco",
-    "winery": "Baron de Ladoucette",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 63,
-    "name": "Barone pizzini Animante D.Z. 75cl",
-    "type": "Spumante",
-    "winery": "Barone Pizzini",
-    "grapes": "Chardonnay, Pinot Nero, Pinot Bianco."
-  },
-  {
-    "id": 64,
-    "name": "Barone pizzini Animante D.Z. 150cl",
-    "type": "Spumante",
-    "winery": "Barone Pizzini",
-    "grapes": "Chardonnay, Pinot Nero, Pinot Bianco."
-  },
-  {
-    "id": 65,
-    "name": "Barricaia Bianco 2017 75cl Villa Rinaldi",
-    "type": "Bianco",
-    "winery": "Villa Rinaldi",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 66,
-    "name": "Bellavista Alma Assemblage1 Bianco 75cl Moretti",
-    "type": "Spumante",
-    "winery": "Bellavista",
-    "grapes": "Chardonnay, Pinot Nero, Pinot Bianco."
-  },
-  {
-    "id": 67,
-    "name": "Bellavista La Scala Bianco 75cl Moretti 2017",
-    "type": "Spumante",
-    "winery": "Bellavista",
-    "grapes": "Chardonnay, Pinot Nero."
-  },
-  {
-    "id": 68,
-    "name": "Benjamin Daguenau XXI Bianco 2021",
-    "type": "Bianco",
-    "winery": "Domaine Didier Dagueneau",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 69,
-    "name": "Beyond The Clouds Bianco 2022 Elena Walch",
-    "type": "Bianco",
-    "winery": "Elena Walch",
-    "grapes": "Chardonnay e altri vitigni."
-  },
-  {
-    "id": 70,
-    "name": "Bianca Di Valguernera Bianco 2016 75cl Duca Di Salaparuta",
-    "type": "Bianco",
-    "winery": "Duca Di Salaparuta",
-    "grapes": "100% Inzolia."
-  },
-  {
-    "id": 71,
-    "name": "Bianchi Grilli Per La Testa Bianco 2021 75cl Tore Dei Beati",
-    "type": "Bianco",
-    "winery": "Torre Dei Beati",
-    "grapes": "100% Pecorino."
-  },
-  {
-    "id": 72,
-    "name": "Blauburgunder Vinschgauer Rosso 2021 Baron Von Kripp",
-    "type": "Rosso",
-    "winery": "Baron Von Kripp",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 73,
-    "name": "Bolgheri Rosso 2022 75cl Grattamacco",
-    "type": "Rosso",
-    "winery": "Grattamacco",
-    "grapes": "Cabernet Sauvignon, Merlot, Sangiovese."
-  },
-  {
-    "id": 74,
-    "name": "ITG TOSCANA L Alberello Rosso 2019 150cl Grattamacco",
-    "type": "Rosso",
-    "winery": "Grattamacco",
-    "grapes": "Cabernet Sauvignon, Cabernet Franc, Petit Verdot."
-  },
-  {
-    "id": 75,
-    "name": "Bollinger Champagne 150cl Bollinger Special Cuvée Brut",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 76,
-    "name": "Bollinger Champagne 75cl Bollinger 007 EDITION AST",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "Pinot Noir, Chardonnay."
-  },
-  {
-    "id": 77,
-    "name": "Bollinger Champagne 75cl Bollinger B13 AST",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 78,
-    "name": "Bollinger Champagne 75cl Bollinger Special Cuvée Brut",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 79,
-    "name": "Bougogne Regnard Pinot Nero 2023 Rosso",
-    "type": "Rosso",
-    "winery": "Regnard",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 80,
-    "name": "Bougognr Bianco 2022 75cl Domaine Chanson",
-    "type": "Bianco",
-    "winery": "Domaine Chanson",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 81,
-    "name": "Bourgogne Aligoté 2022 Jean-marie-bouzereau Bianco",
-    "type": "Bianco",
-    "winery": "Jean-Marie Bouzereau",
-    "grapes": "100% Aligoté."
-  },
-  {
-    "id": 82,
-    "name": "Bourgogne Bianco 2009 premier cru 75cl Regnard",
-    "type": "Bianco",
-    "winery": "Regnard",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 83,
-    "name": "Bourgogne Bianco 2022 75cl Louis Jadot",
-    "type": "Bianco",
-    "winery": "Louis Jadot",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 84,
-    "name": "Bourgogne Bianco 2022 75cl Regnard",
-    "type": "Bianco",
-    "winery": "Regnard",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 85,
-    "name": "Bourgogne Blanc Retour des Flanders 2023 Bianco Regnard",
-    "type": "Bianco",
-    "winery": "Regnard",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 86,
-    "name": "Bourgogne Hautes-Cotes de Beaune 2022 Jean fery Bianco",
-    "type": "Bianco",
-    "winery": "Jean Fery",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 87,
-    "name": "Bricco Dell'Uccellone Rosso 2020 75cl Braida",
-    "type": "Rosso",
-    "winery": "Braida",
-    "grapes": "100% Barbera."
-  },
-  {
-    "id": 88,
-    "name": "Bruciato Rosso 2024 75cl Antinori",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Guado al Tasso",
-    "grapes": "Cabernet Sauvignon, Merlot, Syrah."
-  },
-  {
-    "id": 89,
-    "name": "Brunello Di Montalcino Riserva Rosso 2018 75cl Poggio Di Sotto",
-    "type": "Rosso",
-    "winery": "Poggio Di Sotto",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 90,
-    "name": "Brunello Di Montalcino Riserva Rosso 2020 75cl Pian delle vigne",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Pian Delle Vigne",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 91,
-    "name": "Brunello Di Montalcino Rosso 2016 75cl Ciacci piccolomi Riserva S. Caterina",
-    "type": "Rosso",
-    "winery": "Ciacci Piccolomini d'Aragona",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 92,
-    "name": "BRUNELLO Di Montalcino Rosso 2019 75cl Casanova di Neri",
-    "type": "Rosso",
-    "winery": "Casanova di Neri",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 93,
-    "name": "Brunello Di Montalcino Rosso 2019 75cl Ciacci piccolomi",
-    "type": "Rosso",
-    "winery": "Ciacci Piccolomini d'Aragona",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 94,
-    "name": "Brunello Di Montalcino Rosso 2019 75cl Ciacci piccolomi pianrosso",
-    "type": "Rosso",
-    "winery": "Ciacci Piccolomini d'Aragona",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 95,
-    "name": "Brunello Di Montalcino Rosso 2019 75cl Poggio Di Sotto",
-    "type": "Rosso",
-    "winery": "Poggio Di Sotto",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 96,
-    "name": "Brunello Di Montalcino Rosso CERRETALTO 2018 75cl Casanova di Neri",
-    "type": "Rosso",
-    "winery": "Casanova di Neri",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 97,
-    "name": "Brunello Di Montalcino Rosso Giovanni Neri 2019 75cl Casanova di Neri",
-    "type": "Rosso",
-    "winery": "Casanova di Neri",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 98,
-    "name": "Brunello Di Montalcino Rosso TENUTA NUOVA 2019 75cl Casanova di Neri",
-    "type": "Rosso",
-    "winery": "Casanova di Neri",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 99,
-    "name": "Brunello di Montalcio 75cl Silvio Nardi 2019",
-    "type": "Rosso",
-    "winery": "Silvio Nardi",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 100,
-    "name": "Brunello Le Regnaie 2018 Rosso",
-    "type": "Rosso",
-    "winery": "Le Ragnaie",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 101,
-    "name": "Brunello Le Regnaie 2019 Rosso",
-    "type": "Rosso",
-    "winery": "Le Ragnaie",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 102,
-    "name": "Buisson renard pouilly fume 2022 Domaine Ddier daguenau Bianco",
-    "type": "Bianco",
-    "winery": "Domaine Didier Dagueneau",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 103,
-    "name": "Ca Dei Frati Rosso Amarone 75cl 2012",
-    "type": "Rosso",
-    "winery": "Ca' dei Frati",
-    "grapes": "Corvina, Rondinella, Croatina."
-  },
-  {
-    "id": 104,
-    "name": "Ca Dei Frati Rosso Amarone 75cl 2013",
-    "type": "Rosso",
-    "winery": "Ca' dei Frati",
-    "grapes": "Corvina, Rondinella, Croatina."
-  },
-  {
-    "id": 105,
-    "name": "Ca Dei Frati Rosso Amarone 75cl 2016",
-    "type": "Rosso",
-    "winery": "Ca' dei Frati",
-    "grapes": "Corvina, Rondinella, Croatina."
-  },
-  {
-    "id": 106,
-    "name": "Cabochon Bianco n24 75cl Monterossa",
-    "type": "Spumante",
-    "winery": "Monterossa",
-    "grapes": "Chardonnay e Pinot Nero."
-  },
-  {
-    "id": 107,
-    "name": "Cabochon Bianco n25 75cl Monterossa",
-    "type": "Spumante",
-    "winery": "Monterossa",
-    "grapes": "Chardonnay e Pinot Nero."
-  },
-  {
-    "id": 108,
-    "name": "Cabraia Toscana Rosso 75cl Gualdo del Re 2019",
-    "type": "Rosso",
-    "winery": "Gualdo del Re",
-    "grapes": "Cabernet Franc e Cabernet Sauvignon."
-  },
-  {
-    "id": 109,
-    "name": "Calabrone Rosso 2018 75cl Bastianich",
-    "type": "Rosso",
-    "winery": "Bastianich",
-    "grapes": "Refosco, Schioppettino, Merlot, Grignolino."
-  },
-  {
-    "id": 110,
-    "name": "Calafuria Rose 75cl Antinori",
-    "type": "Rosé",
-    "winery": "Marchesi Antinori - Tormaresca",
-    "grapes": "100% Negroamaro."
-  },
-  {
-    "id": 111,
-    "name": "Calvari Rosso 2020 75cl Meroi",
-    "type": "Rosso",
-    "winery": "Meroi",
-    "grapes": "100% Refosco dal Peduncolo Rosso."
-  },
-  {
-    "id": 112,
-    "name": "Campo Alla Sughera Rosso 2019 75cl Campo Alla Sughera",
-    "type": "Rosso",
-    "winery": "Campo Alla Sughera",
-    "grapes": "Petit Verdot e Cabernet Sauvignon."
-  },
-  {
-    "id": 113,
-    "name": "Capri Bianco Bianco 2021 75cl Scala Fenicia",
-    "type": "Bianco",
-    "winery": "Scala Fenicia",
-    "grapes": "Greco, Biancolella, Falanghina."
-  },
-  {
-    "id": 114,
-    "name": "Carmenere Carminium Rosso 2021 75cl Inama",
-    "type": "Rosso",
-    "winery": "Inama",
-    "grapes": "100% Carmenere."
-  },
-  {
-    "id": 115,
-    "name": "Carmenere Rosso 2018 150cl San Leonardo",
-    "type": "Rosso",
-    "winery": "San Leonardo",
-    "grapes": "100% Carmenere."
-  },
-  {
-    "id": 116,
-    "name": "Castello Di Neive Bianco 75cl Castello Di Neive 2019",
-    "type": "Bianco",
-    "winery": "Castello Di Neive",
-    "grapes": "100% Arneis."
-  },
-  {
-    "id": 117,
-    "name": "Cervaro Della Sala Bianco 2022 75cl Antinori",
-    "type": "Bianco",
-    "winery": "Marchesi Antinori - Castello della Sala",
-    "grapes": "Chardonnay e Grechetto."
-  },
-  {
-    "id": 118,
-    "name": "Chablis 1er Cru “Mont de Milieu” 2021 Billaund-simon Bianco",
-    "type": "Bianco",
-    "winery": "Billaud-Simon",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 119,
-    "name": "Chablis 1er Cru Vaillons 2023 Domaine Servin",
-    "type": "Bianco",
-    "winery": "Domaine Servin",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 120,
-    "name": "Chablis 2023 Bianco Albert Pic",
-    "type": "Bianco",
-    "winery": "Albert Pic",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 121,
-    "name": "Chablis AOC 2020 Billaund-simon Bianco",
-    "type": "Bianco",
-    "winery": "Billaud-Simon",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 122,
-    "name": "Champagne 75cl Andre Robert les jardins du Mesnil grand cru",
-    "type": "Champagne",
-    "winery": "André Robert",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 123,
-    "name": "Champagne Bianco 150cl Charles Heidsieck Brut Reserve",
-    "type": "Champagne",
-    "winery": "Charles Heidsieck",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 124,
-    "name": "Champagne Bianco 150cl Cristal 2012 MAGNUM",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 125,
-    "name": "Champagne Bianco 150cl Cristal MAGNUM 2008",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 126,
-    "name": "Champagne Bianco 150cl Cristal MAGNUM 2008 ast",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 127,
-    "name": "Champagne Bianco 150cl Delamotte",
-    "type": "Champagne",
-    "winery": "Delamotte",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 128,
-    "name": "Champagne Bianco 150cl Lanson Black Reserve",
-    "type": "Champagne",
-    "winery": "Lanson",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 129,
-    "name": "Champagne Bianco 150cl Perrier Jouet Belle Epoque 2012",
-    "type": "Champagne",
-    "winery": "Perrier Jouët",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 130,
-    "name": "Champagne Bianco 150cl Perrier Jouet Belle Epoque 2013 ASt",
-    "type": "Champagne",
-    "winery": "Perrier Jouët",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 131,
-    "name": "Champagne Bianco 300cl Lanson Black Reserve",
-    "type": "Champagne",
-    "winery": "Lanson",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 132,
-    "name": "Champagne Bianco 37,5 cl Krug Grande Fiorellini",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 133,
-    "name": "Champagne Bianco 75cl Agrapart",
-    "type": "Champagne",
-    "winery": "Agrapart & Fils",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 134,
-    "name": "Champagne Bianco 75cl Bruno Paillard D.Z.",
-    "type": "Champagne",
-    "winery": "Bruno Paillard",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 135,
-    "name": "Champagne Bianco 75cl Charles Heidsieck Blanc de Blancs",
-    "type": "Champagne",
-    "winery": "Charles Heidsieck",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 136,
-    "name": "Champagne Bianco 75cl Charles Heidsieck Brut Reserve",
-    "type": "Champagne",
-    "winery": "Charles Heidsieck",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 137,
-    "name": "Champagne Bianco 75cl Charles Heidsieck des Millénaires 2014",
-    "type": "Champagne",
-    "winery": "Charles Heidsieck",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 138,
-    "name": "Champagne Bianco 75cl Charles Heidsieck Millesimato 2018",
-    "type": "Champagne",
-    "winery": "Charles Heidsieck",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 139,
-    "name": "Champagne Bianco 75cl Charles Heidsieck Rosè Reserve",
-    "type": "Champagne",
-    "winery": "Charles Heidsieck",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 140,
-    "name": "Champagne Bianco 75cl Cristal 2015",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 141,
-    "name": "Champagne Bianco 75cl Cristal 2015 ast",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 142,
-    "name": "Champagne Bianco 75cl Cristal vinoteque 2002",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 143,
-    "name": "Champagne Bianco 75cl Delamotte",
-    "type": "Champagne",
-    "winery": "Delamotte",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 144,
-    "name": "Champagne Bianco 75cl Dom Perignon P2 2006",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 145,
-    "name": "Champagne Bianco 75cl Dom Ruinart 2010",
-    "type": "Champagne",
-    "winery": "Ruinart",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 146,
-    "name": "Champagne Bianco 75cl Domperignon 2008 ast Lenny krevitz",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 147,
-    "name": "Champagne Bianco 75cl Domperignon 2010 Ledy gaga",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 148,
-    "name": "Champagne Bianco 75cl Domperignon 2010 Ledy gaga ast",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 149,
-    "name": "Champagne Bianco 75cl Domperignon 2012 ast",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 150,
-    "name": "Champagne Bianco 75cl Domperignon 2013",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 151,
-    "name": "Champagne Bianco 75cl Domperignon 2015",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "51% Pinot Noir, 49% Chardonnay."
-  },
-  {
-    "id": 152,
-    "name": "Champagne Bianco 75cl Domperignon 2015 ast",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "51% Pinot Noir, 49% Chardonnay."
-  },
-  {
-    "id": 153,
-    "name": "Champagne Bianco 75cl Domperignon 2015 lUMINOR",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "51% Pinot Noir, 49% Chardonnay."
-  },
-  {
-    "id": 154,
-    "name": "Champagne Bianco 75cl Domperignon ast",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 155,
-    "name": "Champagne Bianco 75cl Domperignon P2 ast 2004",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 156,
-    "name": "Champagne Bianco 75cl Domperignon P2 ast 2006",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 157,
-    "name": "Champagne Bianco 75cl Domperignon TRIBUTE JOAN",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 158,
-    "name": "Champagne Bianco 75cl Egly Ouriet",
-    "type": "Champagne",
-    "winery": "Egly-Ouriet",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 159,
-    "name": "Champagne Bianco 75cl Encry D.Z.",
-    "type": "Champagne",
-    "winery": "Encry",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 160,
-    "name": "Champagne Bianco 75cl Gosset Grand Reserve",
-    "type": "Champagne",
-    "winery": "Gosset",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 161,
-    "name": "Champagne Bianco 75cl Jacquesson 742 DT",
-    "type": "Champagne",
-    "winery": "Jacquesson",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 162,
-    "name": "Champagne Bianco 75cl Jacquesson 744",
-    "type": "Champagne",
-    "winery": "Jacquesson",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 163,
-    "name": "Champagne Bianco 75cl Jacquesson 745",
-    "type": "Champagne",
-    "winery": "Jacquesson",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 164,
-    "name": "Champagne Bianco 75cl Jacquesson 746",
-    "type": "Champagne",
-    "winery": "Jacquesson",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 165,
-    "name": "Champagne Bianco 75cl Jacquesson 747",
-    "type": "Champagne",
-    "winery": "Jacquesson",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 166,
-    "name": "Champagne Bianco 75cl Krug Grande Cuvée 168 éme edition Brut Ast",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 167,
-    "name": "Champagne Bianco 75cl Krug Grande Cuvée 169 éme edition Brut",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 168,
-    "name": "Champagne Bianco 75cl Krug Grande Cuvée 170 éme edition Brut",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 169,
-    "name": "Champagne Bianco 75cl Krug Grande Cuvée 171 éme edition Brut",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 170,
-    "name": "Champagne Bianco 75cl Krug Grande Cuvée 172 éme edition Brut",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 171,
-    "name": "Champagne Bianco 75cl La Grande Dama 2015",
-    "type": "Champagne",
-    "winery": "Veuve Clicquot",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 172,
-    "name": "Champagne Bianco 75cl La Grande Dama 2015 AST",
-    "type": "Champagne",
-    "winery": "Veuve Clicquot",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 173,
-    "name": "Champagne Bianco 75cl Lanson B/b",
-    "type": "Champagne",
-    "winery": "Lanson",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 174,
-    "name": "Champagne Bianco 75cl Lanson Black Le Vintage 2012",
-    "type": "Champagne",
-    "winery": "Lanson",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 175,
-    "name": "Champagne Bianco 75cl Lanson Black Reserve",
-    "type": "Champagne",
-    "winery": "Lanson",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 176,
-    "name": "Champagne Bianco 75cl Lanson NOBLE CUVE 2004 B/B",
-    "type": "Champagne",
-    "winery": "Lanson",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 177,
-    "name": "Champagne Bianco 75cl Lanson NOBLE CUVE 2004 BRUT",
-    "type": "Champagne",
-    "winery": "Lanson",
-    "grapes": "Chardonnay e Pinot Noir."
-  },
-  {
-    "id": 178,
-    "name": "Champagne Bianco 75cl Lanson Organic",
-    "type": "Champagne",
-    "winery": "Lanson",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 179,
-    "name": "Champagne Bianco 75cl Moet Extra Brut Grand Vintage 2012",
-    "type": "Champagne",
-    "winery": "Moët & Chandon",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 180,
-    "name": "Champagne Bianco 75cl Moet Extra Brut Grand Vintage 2012 AST",
-    "type": "Champagne",
-    "winery": "Moët & Chandon",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 181,
-    "name": "Champagne Bianco 75cl Moet Extra Brut Grand Vintage 2015",
-    "type": "Champagne",
-    "winery": "Moët & Chandon",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 182,
-    "name": "Champagne Bianco 75cl Orban Francis brut Reserve",
-    "type": "Champagne",
-    "winery": "Orban Francis",
-    "grapes": "100% Meunier."
-  },
-  {
-    "id": 183,
-    "name": "Champagne Bianco 75cl Paul Clouet Grand Cru Blanc de Noirs",
-    "type": "Champagne",
-    "winery": "Paul Clouet",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 184,
-    "name": "Champagne Bianco 75cl Perrier Jouet B/B",
-    "type": "Champagne",
-    "winery": "Perrier Jouët",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 185,
-    "name": "Champagne Bianco 75cl Perrier Jouet B/B Ast",
-    "type": "Champagne",
-    "winery": "Perrier Jouët",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 186,
-    "name": "Champagne Bianco 75cl Perrier Jouet Belle Epoque 2014",
-    "type": "Champagne",
-    "winery": "Perrier Jouët",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 187,
-    "name": "Champagne Bianco 75cl Perrier Jouet Belle Epoque 2015",
-    "type": "Champagne",
-    "winery": "Perrier Jouët",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 188,
-    "name": "Champagne Bianco 75cl Perrier Jouet Belle Epoque 2015 ast",
-    "type": "Champagne",
-    "winery": "Perrier Jouët",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 189,
-    "name": "Champagne Bianco 75cl Perrier Jouet Belle Epoque 2016",
-    "type": "Champagne",
-    "winery": "Perrier Jouët",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 190,
-    "name": "Champagne Bianco 75cl Perrier Jouet Belle Epoque 2017 B/B",
-    "type": "Champagne",
-    "winery": "Perrier Jouët",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 191,
-    "name": "Champagne Bianco 75cl Perrier Jouet Grand Bruit",
-    "type": "Champagne",
-    "winery": "Perrier Jouët",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 192,
-    "name": "Champagne Bianco 75cl Pommery Couve Louise 2005",
-    "type": "Champagne",
-    "winery": "Pommery",
-    "grapes": "Chardonnay e Pinot Noir."
-  },
-  {
-    "id": 193,
-    "name": "Champagne Bianco 75cl Roeder B/B AST",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 194,
-    "name": "Champagne Bianco 75cl Gosset Extra Bruit",
-    "type": "Champagne",
-    "winery": "Gosset",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 195,
-    "name": "Champagne Bianco 75cl Roederer 242 ast",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 196,
-    "name": "Champagne Bianco 75cl Roederer 243 ast",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 197,
-    "name": "Champagne Bianco 75cl Roger Brune",
-    "type": "Champagne",
-    "winery": "Roger Brun",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 198,
-    "name": "Champagne Bianco 75cl Ruinart Brut",
-    "type": "Champagne",
-    "winery": "Ruinart",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 199,
-    "name": "Champagne Bianco 75cl Salon 2013",
-    "type": "Champagne",
-    "winery": "Salon",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 200,
-    "name": "Champagne Bianco 75cl Salon 2013 ast",
-    "type": "Champagne",
-    "winery": "Salon",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 201,
-    "name": "Champagne Bianco 75cl Veuve Clicquot",
-    "type": "Champagne",
-    "winery": "Veuve Clicquot",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 202,
-    "name": "Champagne Bianco 75cl Veuve Clicquot Extra old Extra Brut",
-    "type": "Champagne",
-    "winery": "Veuve Clicquot",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 203,
-    "name": "Champagne Bianco 75cl Veuve Clicquot Extra old Extra Brut 2008 AST",
-    "type": "Champagne",
-    "winery": "Veuve Clicquot",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 204,
-    "name": "Champagne Bianco 75cl Veuve Clicquot Rose",
-    "type": "Champagne",
-    "winery": "Veuve Clicquot",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 205,
-    "name": "Champagne Bianco CHATEAU DE BLIGNY GRAN RESERVE",
-    "type": "Champagne",
-    "winery": "Chateau de Bligny",
-    "grapes": "Chardonnay e Pinot Noir."
-  },
-  {
-    "id": 206,
-    "name": "Champagne Bianco 2000 75cl Krug Ast",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 207,
-    "name": "Champagne Bianco 2002 75cl Krug",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 208,
-    "name": "Champagne Bianco 2004 75cl Krug Ast",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 209,
-    "name": "Champagne Bianco 2006 75cl Krug",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 210,
-    "name": "Champagne Bianco 2006 CLOS D'AMBONNAY 75cl Krug AST",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 211,
-    "name": "Champagne Bianco 2008 75cl Gran Cru Royal Pommery",
-    "type": "Champagne",
-    "winery": "Pommery",
-    "grapes": "Chardonnay e Pinot Noir."
-  },
-  {
-    "id": 212,
-    "name": "Champagne Bianco 2008 CLOS DU MESNIL 75cl Krug AST",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 213,
-    "name": "Champagne Bianco 2016 75cl Ruinart Millesimato 2016",
-    "type": "Champagne",
-    "winery": "Ruinart",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 214,
-    "name": "Champagne Bianco Armand de Brignac Gold 75cl",
-    "type": "Champagne",
-    "winery": "Armand de Brignac",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 215,
-    "name": "Champagne Bianco Guiborat 2016 75cl",
-    "type": "Champagne",
-    "winery": "Guiborat",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 216,
-    "name": "Champagne Bonnere extra brut 75cl Bianco",
-    "type": "Champagne",
-    "winery": "Bonnere",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 217,
-    "name": "Champagne Encry rose 75cl",
-    "type": "Champagne",
-    "winery": "Encry",
-    "grapes": "Chardonnay e Pinot Noir."
-  },
-  {
-    "id": 218,
-    "name": "Champagne Mum Bianco 75cl",
-    "type": "Champagne",
-    "winery": "G.H. Mumm",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 219,
-    "name": "Champagne Paul Sadi 75cl gran cru Virgile",
-    "type": "Champagne",
-    "winery": "Paul Sadi",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 220,
-    "name": "Champagne Rose 37,5 cl Krug Grande Fiorellini",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 221,
-    "name": "Champagne Rose 75cl Bollinger",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 222,
-    "name": "Champagne Rose 75cl Cristal 2014",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 223,
-    "name": "Champagne Rose 75cl Domperignon 2008 ast Ledy gaga",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 224,
-    "name": "Champagne ROSE 75cl Krug Grande Cuvée 28 éme edition Brut",
-    "type": "Champagne",
-    "winery": "Krug",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 225,
-    "name": "Champagne Rose 75cl Laurent Perrier Brut Rosé",
-    "type": "Champagne",
-    "winery": "Laurent-Perrier",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 226,
-    "name": "Champagne Rose 75cl Moet Gran Vintage Rosé 2013",
-    "type": "Champagne",
-    "winery": "Moët & Chandon",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 227,
-    "name": "Champagne Rose 75cl Moet Rosé",
-    "type": "Champagne",
-    "winery": "Moët & Chandon",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 228,
-    "name": "Champagne Rose 75cl Perrier Jouet blason",
-    "type": "Champagne",
-    "winery": "Perrier Jouët",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 229,
-    "name": "Champagne Rose 75cl Roederer Brut Vintage Rosé 2015",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 230,
-    "name": "Champagne Rose 75cl Roederer Brut Vintage Rosé 2017",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 231,
-    "name": "Champagne Rose 75cl Ruinart Brut Rosé",
-    "type": "Champagne",
-    "winery": "Ruinart",
-    "grapes": "Chardonnay e Pinot Noir."
-  },
-  {
-    "id": 232,
-    "name": "Champagne Rose 1998 75cl Dom Ruinart",
-    "type": "Champagne",
-    "winery": "Ruinart",
-    "grapes": "100% Chardonnay (vinificato rosé)."
-  },
-  {
-    "id": 233,
-    "name": "Chardonnay Bianco 2022 75cl Jermann",
-    "type": "Bianco",
-    "winery": "Jermann",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 234,
-    "name": "Chardonnay Bianco 2022 75cl Miani",
-    "type": "Bianco",
-    "winery": "Miani",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 235,
-    "name": "Chardonnay Bianco 2022 75cl Tramin",
-    "type": "Bianco",
-    "winery": "Cantina Tramin",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 236,
-    "name": "Chardonnay Bianco 2023 75cl Les Cretes",
-    "type": "Bianco",
-    "winery": "Les Cretes",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 237,
-    "name": "chardonnay pierre ferraund e fils Bianco",
-    "type": "Bianco",
-    "winery": "Pierre Ferraud & Fils",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 238,
-    "name": "Chassagne- Montrachet Les Chaumes 2022 La Croix de Brully Bianco",
-    "type": "Bianco",
-    "winery": "La Croix de Brully",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 239,
-    "name": "Chateau Clarke Rosso 2001 75cl Baronedmond De Rothschild",
-    "type": "Rosso",
-    "winery": "Baron Edmond De Rothschild",
-    "grapes": "Merlot e Cabernet Sauvignon."
-  },
-  {
-    "id": 240,
-    "name": "Chateau Clarke Rosso 2016 75cl Baronedmond De Rothschild",
-    "type": "Rosso",
-    "winery": "Baron Edmond De Rothschild",
-    "grapes": "Merlot e Cabernet Sauvignon."
-  },
-  {
-    "id": 241,
-    "name": "Chateau Clarke Rosso 2016 75cl Baronedmond De Rothschild",
-    "type": "Rosso",
-    "winery": "Baron Edmond De Rothschild",
-    "grapes": "Merlot e Cabernet Sauvignon."
-  },
-  {
-    "id": 242,
-    "name": "Chateau Le Grand Verdus 2021 Bianco Famille le grix de salle",
-    "type": "Bianco",
-    "winery": "Famille Le Grix de la Salle",
-    "grapes": "Sauvignon Blanc e Semillon."
-  },
-  {
-    "id": 243,
-    "name": "Chàteau Puygueraud Rosso 2020 Nicolas Thienpont",
-    "type": "Rosso",
-    "winery": "Nicolas Thienpont",
-    "grapes": "Merlot, Cabernet Franc, Malbec."
-  },
-  {
-    "id": 244,
-    "name": "Chateneuf Du Pape 2023 Rosso",
-    "type": "Rosso",
-    "winery": "Produttore locale",
-    "grapes": "Grenache, Syrah, Mourvèdre."
-  },
-  {
-    "id": 245,
-    "name": "Chianti Classico Rosso 2021 150cl Castellare",
-    "type": "Rosso",
-    "winery": "Castellare di Castellina",
-    "grapes": "Sangiovese e Canaiolo."
-  },
-  {
-    "id": 246,
-    "name": "Chianti Classico Rosso 2021 75cl Fontodi Di Manetti",
-    "type": "Rosso",
-    "winery": "Fontodi",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 247,
-    "name": "Chianti Classico Rosso 2022 150cl Castellare",
-    "type": "Rosso",
-    "winery": "Castellare di Castellina",
-    "grapes": "Sangiovese e Canaiolo."
-  },
-  {
-    "id": 248,
-    "name": "Chianti Classico Rosso 2023 75cl Castellare",
-    "type": "Rosso",
-    "winery": "Castellare di Castellina",
-    "grapes": "Sangiovese e Canaiolo."
-  },
-  {
-    "id": 249,
-    "name": "Ciliegiolo Rosso 2019 75cl Mastro Janni",
-    "type": "Rosso",
-    "winery": "Mastrojanni",
-    "grapes": "100% Ciliegiolo."
-  },
-  {
-    "id": 250,
-    "name": "Clos De La Feguine Rosso 2020 75cl Domaine Jacques Prieur",
-    "type": "Rosso",
-    "winery": "Domaine Jacques Prieur",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 251,
-    "name": "Comtes de Champagne Blanc de Blancs Taittinger 2007-2014",
-    "type": "Champagne",
-    "winery": "Taittinger",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 252,
-    "name": "Conte Della Vipera Bianco 2022 75cl Antinori",
-    "type": "Bianco",
-    "winery": "Marchesi Antinori - Castello della Sala",
-    "grapes": "Sauvignon Blanc e Semillon."
-  },
-  {
-    "id": 253,
-    "name": "Conteisa Rosso 2015 75cl Gaja",
-    "type": "Rosso",
-    "winery": "Gaja",
-    "grapes": "Nebbiolo e Barbera."
-  },
-  {
-    "id": 254,
-    "name": "Conteisa Rosso 2019 75cl Gaja",
-    "type": "Rosso",
-    "winery": "Gaja",
-    "grapes": "Nebbiolo e Barbera."
-  },
-  {
-    "id": 255,
-    "name": "Corte Del Lupo Bianco 2023 75cl Ca Del Bosco",
-    "type": "Bianco",
-    "winery": "Ca Del Bosco",
-    "grapes": "Chardonnay e Pinot Bianco."
-  },
-  {
-    "id": 256,
-    "name": "Corte Del Lupo Rosso 2019 75cl Ca Del Bosco",
-    "type": "Rosso",
-    "winery": "Ca Del Bosco",
-    "grapes": "Merlot, Cabernet Sauvignon, Cabernet Franc, Carménère."
-  },
-  {
-    "id": 257,
-    "name": "Corte Del Lupo Rosso 2021 75cl Ca Del Bosco",
-    "type": "Rosso",
-    "winery": "Ca Del Bosco",
-    "grapes": "Merlot, Cabernet Sauvignon, Cabernet Franc, Carménère."
-  },
-  {
-    "id": 258,
-    "name": "Costa D Amalfi Rose 75cl Marisa Cuomo 2023",
-    "type": "Rosé",
-    "winery": "Marisa Cuomo",
-    "grapes": "Aglianico e Piedirosso."
-  },
-  {
-    "id": 259,
-    "name": "Costa D’amalfi rosso 75cl Marisa Cuomo 2022",
-    "type": "Rosso",
-    "winery": "Marisa Cuomo",
-    "grapes": "Aglianico e Piedirosso."
-  },
-  {
-    "id": 260,
-    "name": "Cru Monplaisir 2022 Rosso Gonet-Médeville",
-    "type": "Rosso",
-    "winery": "Gonet-Médeville",
-    "grapes": "Merlot, Cabernet Sauvignon, Cabernet Franc."
-  },
-  {
-    "id": 261,
-    "name": "Cuvee Bois Bianco 2022 75cl Les Cretes",
-    "type": "Bianco",
-    "winery": "Les Cretes",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 262,
-    "name": "Cuvée Ultra Brut 2010",
-    "type": "Spumante",
-    "winery": "Villa Rinaldi",
-    "grapes": "Chardonnay e Pinot Nero."
-  },
-  {
-    "id": 263,
-    "name": "D Arapri Bianco 75cl D Arapri",
-    "type": "Spumante",
-    "winery": "D'Araprì",
-    "grapes": "Bombino Bianco e Pinot Nero."
-  },
-  {
-    "id": 264,
-    "name": "MALBEC De Los Andes Rosso 2022 75cl Terazas",
-    "type": "Rosso",
-    "winery": "Terrazas de los Andes",
-    "grapes": "100% Malbec."
-  },
-  {
-    "id": 265,
-    "name": "Derthona 2023 Vigneti Massa Bianco",
-    "type": "Bianco",
-    "winery": "Vigneti Massa",
-    "grapes": "100% Timorasso."
-  },
-  {
-    "id": 266,
-    "name": "Dogma Bianco 75cl Borgo Maragliano",
-    "type": "Spumante",
-    "winery": "Borgo Maragliano",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 267,
-    "name": "Dolcetto Rosso 2023 75cl Bruno Giacosa",
-    "type": "Rosso",
-    "winery": "Bruno Giacosa",
-    "grapes": "100% Dolcetto."
-  },
-  {
-    "id": 268,
-    "name": "Dolcetto Rosso 2023 75cl Elio Grasso",
-    "type": "Rosso",
-    "winery": "Elio Grasso",
-    "grapes": "100% Dolcetto."
-  },
-  {
-    "id": 269,
-    "name": "Dolcetto Rosso 2024 75cl Bruno Giacosa",
-    "type": "Rosso",
-    "winery": "Bruno Giacosa",
-    "grapes": "100% Dolcetto."
-  },
-  {
-    "id": 270,
-    "name": "Domaine de la Ferte Givry “Clos de Mortières” 2021 Famille Devillard",
-    "type": "Rosso",
-    "winery": "Famille Devillard",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 271,
-    "name": "Domaine Georges Vernay Condrieu 2016",
-    "type": "Bianco",
-    "winery": "Domaine Georges Vernay",
-    "grapes": "100% Viognier."
-  },
-  {
-    "id": 272,
-    "name": "Domaine Jacques Prieur Beaune Clos de La Fèguine 1er cru 2020 Rosso",
-    "type": "Rosso",
-    "winery": "Domaine Jacques Prieur",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 273,
-    "name": "Domaines Schlumberger 2022 Riesling Les Princes Abbès",
-    "type": "Bianco",
-    "winery": "Domaines Schlumberger",
-    "grapes": "100% Riesling."
-  },
-  {
-    "id": 274,
-    "name": "Dosaggio Zero Bianco 75cl Letrari 2020",
-    "type": "Spumante",
-    "winery": "Letrari",
-    "grapes": "Chardonnay e Pinot Nero."
-  },
-  {
-    "id": 275,
-    "name": "Dosaggio Zero Millesimato Bianco 2016 75cl Letrari 2016",
-    "type": "Spumante",
-    "winery": "Letrari",
-    "grapes": "Chardonnay e Pinot Nero."
-  },
-  {
-    "id": 276,
-    "name": "Douro Duas Rosso 2021 75cl Quintos Ramos Pinto",
-    "type": "Rosso",
-    "winery": "Ramos Pinto",
-    "grapes": "Touriga Nacional, Touriga Franca, Tinta Roriz."
-  },
-  {
-    "id": 277,
-    "name": "Duca Enrico Rosso 2019 75cl Duca Di Salaparuta",
-    "type": "Rosso",
-    "winery": "Duca Di Salaparuta",
-    "grapes": "100% Nero d'Avola."
-  },
-  {
-    "id": 278,
-    "name": "Elba Vermentino Bianco 2021 75cl Chiesina Di Lancona",
-    "type": "Bianco",
-    "winery": "Chiesina di Lacona",
-    "grapes": "100% Vermentino."
-  },
-  {
-    "id": 279,
-    "name": "Champagne Encry rose 75cl",
-    "type": "Champagne",
-    "winery": "Encry",
-    "grapes": "Chardonnay e Pinot Noir."
-  },
-  {
-    "id": 280,
-    "name": "Epokale Bianco 2016 75cl Tramin",
-    "type": "Bianco",
-    "winery": "Cantina Tramin",
-    "grapes": "100% Gewürztraminer."
-  },
-  {
-    "id": 281,
-    "name": "Erpacrife D.Z Rosè 2018 75cl",
-    "type": "Spumante",
-    "winery": "Erpacrife",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 282,
-    "name": "Erreo Vesuvio rosato Olivella",
-    "type": "Rosé",
-    "winery": "Olivella",
-    "grapes": "Piedirosso, Aglianico, Guarnaccia."
-  },
-  {
-    "id": 283,
-    "name": "Etna Bianco Bianco 2023 75cl duca di salaparuta",
-    "type": "Bianco",
-    "winery": "Duca Di Salaparuta",
-    "grapes": "Carricante e Catarratto."
-  },
-  {
-    "id": 284,
-    "name": "Etna Bianco Bianco 2023 75cl Greci",
-    "type": "Bianco",
-    "winery": "Graci",
-    "grapes": "Carricante e Catarratto."
-  },
-  {
-    "id": 285,
-    "name": "Etna Rosso Rosso 2022 75cl Graci",
-    "type": "Rosso",
-    "winery": "Graci",
-    "grapes": "100% Nerello Mascalese."
-  },
-  {
-    "id": 286,
-    "name": "Extra Vintage Millesimato Bianco 75cl Ca Del Bosco",
-    "type": "Spumante",
-    "winery": "Ca Del Bosco",
-    "grapes": "Chardonnay, Pinot Bianco, Pinot Nero."
-  },
-  {
-    "id": 287,
-    "name": "F Corta San Seve Bianco 150cl Monterossa",
-    "type": "Spumante",
-    "winery": "Monterossa",
-    "grapes": "Chardonnay e Pinot Bianco."
-  },
-  {
-    "id": 288,
-    "name": "F Corta San Seve Bianco 75cl Monterossa",
-    "type": "Spumante",
-    "winery": "Monterossa",
-    "grapes": "Chardonnay e Pinot Bianco."
-  },
-  {
-    "id": 289,
-    "name": "Ferte Givry Rosso 2021 75cl Famille Devillard",
-    "type": "Rosso",
-    "winery": "Famille Devillard",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 290,
-    "name": "Filetta Di Lamole Rosso 2021 75cl Fontodi Di Manetti",
-    "type": "Rosso",
-    "winery": "Fontodi",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 291,
-    "name": "Fiorduva Furore Bianco 2016 Marisa Cuomo",
-    "type": "Bianco",
-    "winery": "Marisa Cuomo",
-    "grapes": "Fenile, Ginestra, Ripoli."
-  },
-  {
-    "id": 292,
-    "name": "Fiorduva Furore Bianco 2017 Marisa Cuomo",
-    "type": "Bianco",
-    "winery": "Marisa Cuomo",
-    "grapes": "Fenile, Ginestra, Ripoli."
-  },
-  {
-    "id": 293,
-    "name": "Fiorduva Furore Bianco 2021 Marisa Cuomo",
-    "type": "Bianco",
-    "winery": "Marisa Cuomo",
-    "grapes": "Fenile, Ginestra, Ripoli."
-  },
-  {
-    "id": 294,
-    "name": "Fiorduva Furore Bianco 2022 Marisa Cuomo",
-    "type": "Bianco",
-    "winery": "Marisa Cuomo",
-    "grapes": "Fenile, Ginestra, Ripoli."
-  },
-  {
-    "id": 295,
-    "name": "Flaccianello della Piave 2020 Rosso Fontodi",
-    "type": "Rosso",
-    "winery": "Fontodi",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 296,
-    "name": "flaccianello della Piave150cl 2020 Rosso Fontodi",
-    "type": "Rosso",
-    "winery": "Fontodi",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 297,
-    "name": "francois Mikulski cremant Bianco 75cl",
-    "type": "Spumante",
-    "winery": "Francois Mikulski",
-    "grapes": "Chardonnay, Pinot Noir, Aligoté."
-  },
-  {
-    "id": 298,
-    "name": "Fratta Rosso 2018 75cl Maculan",
-    "type": "Rosso",
-    "winery": "Maculan",
-    "grapes": "Cabernet Sauvignon e Merlot."
-  },
-  {
-    "id": 299,
-    "name": "Friulano Bianco 2022 75cl Livio Felluga",
-    "type": "Bianco",
-    "winery": "Livio Felluga",
-    "grapes": "100% Friulano."
-  },
-  {
-    "id": 300,
-    "name": "Friuli Doc Rosso 2020 75cl Miani",
-    "type": "Rosso",
-    "winery": "Miani",
-    "grapes": "100% Merlot."
-  },
-  {
-    "id": 301,
-    "name": "Gaiun Martinenga Rosso 2015 75cl Marchesi Di Gresy",
-    "type": "Rosso",
-    "winery": "Marchesi di Grésy",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 302,
-    "name": "Gaiun Martinenga Rosso 2017 75cl Marchesi Di Gresy",
-    "type": "Rosso",
-    "winery": "Marchesi di Grésy",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 303,
-    "name": "Gaiun Martinenga Rosso 2018 75cl Marchesi Di Gresy",
-    "type": "Rosso",
-    "winery": "Marchesi di Grésy",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 304,
-    "name": "Gaja E Rey Bianco 2021 75cl Gaja",
-    "type": "Bianco",
-    "winery": "Gaja",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 305,
-    "name": "Gattinara Rosso 2019-2022 75cl Travaglini",
-    "type": "Rosso",
-    "winery": "Travaglini",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 306,
-    "name": "Gattinara Rosso 2021 75cl Conterno Nervi 2021",
-    "type": "Rosso",
-    "winery": "Giacomo Conterno - Nervi",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 307,
-    "name": "Gevrey Chambertin Rosso 2020 75cl Arnaund mortet",
-    "type": "Rosso",
-    "winery": "Arnaud Mortet",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 308,
-    "name": "Gevrey Chambertin Rosso 2022 75cl Arnaund mortet",
-    "type": "Rosso",
-    "winery": "Arnaud Mortet",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 309,
-    "name": "Gevrey-Chambertin Chanson 2018 Rosso Domaine Chanson",
-    "type": "Rosso",
-    "winery": "Domaine Chanson",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 310,
-    "name": "Gewuztraminer Bianco 2020 75cl Vincent Spannagel Vin D'Alsace",
-    "type": "Bianco",
-    "winery": "Vincent Spannagel",
-    "grapes": "100% Gewürztraminer."
-  },
-  {
-    "id": 311,
-    "name": "Gewuztraminer Bianco 2022 75cl Tramin",
-    "type": "Bianco",
-    "winery": "Cantina Tramin",
-    "grapes": "100% Gewürztraminer."
-  },
-  {
-    "id": 312,
-    "name": "Ghemme Rosso 2015 75cl Cantalupo",
-    "type": "Rosso",
-    "winery": "Cantalupo",
-    "grapes": "Nebbiolo, Vespolina, Uva Rara."
-  },
-  {
-    "id": 313,
-    "name": "Ghemme Rosso 2016 75cl Cantalupo",
-    "type": "Rosso",
-    "winery": "Cantalupo",
-    "grapes": "Nebbiolo, Vespolina, Uva Rara."
-  },
-  {
-    "id": 314,
-    "name": "Ghilarda Fittiloghe Rosso 2020 75cl Vikevike",
-    "type": "Rosso",
-    "winery": "Vikevike",
-    "grapes": "100% Cannonau."
-  },
-  {
-    "id": 315,
-    "name": "Ghilarda Fittiloghe Rosso 2021 75cl Vikevike",
-    "type": "Rosso",
-    "winery": "Vikevike",
-    "grapes": "100% Cannonau."
-  },
-  {
-    "id": 316,
-    "name": "Giancu Bianco 2022 75cl Tabarka Carloforte",
-    "type": "Bianco",
-    "winery": "Tabarka",
-    "grapes": "100% Vermentino."
-  },
-  {
-    "id": 317,
-    "name": "Giulio Ferrari Bianco 200875cl Ferrari",
-    "type": "Spumante",
-    "winery": "Ferrari",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 318,
-    "name": "Giulio Ferrari Bianco 2015 75cl Ferrari",
-    "type": "Spumante",
-    "winery": "Ferrari",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 319,
-    "name": "Giusto di notri Rosso 2022 Tua Rita",
-    "type": "Rosso",
-    "winery": "Tua Rita",
-    "grapes": "Cabernet Sauvignon, Merlot, Cabernet Franc."
-  },
-  {
-    "id": 320,
-    "name": "Glarea Chardonnay Bianco 2022 Tramin",
-    "type": "Bianco",
-    "winery": "Cantina Tramin",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 321,
-    "name": "Grand Cru Classe Rosso 1991 75cl Chateau Margaux",
-    "type": "Rosso",
-    "winery": "Château Margaux",
-    "grapes": "Cabernet Sauvignon, Merlot, Petit Verdot, Cabernet Franc."
-  },
-  {
-    "id": 322,
-    "name": "Grand Echezeaux Rosso 2020 75cl Romanee-Conti",
-    "type": "Rosso",
-    "winery": "Domaine de la Romanée-Conti",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 323,
-    "name": "Grande Anne Champagne 75cl Bollinger",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 324,
-    "name": "Grande Anne 2014 Champagne 75cl Bollinger",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 325,
-    "name": "Grande Anne Champagne 75cl Bollinger 2014",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 326,
-    "name": "Grattamacco Bolgheri Sup Rosso 2020 150cl Grattamacco",
-    "type": "Rosso",
-    "winery": "Grattamacco",
-    "grapes": "Cabernet Sauvignon, Merlot, Sangiovese."
-  },
-  {
-    "id": 327,
-    "name": "Grattamacco Bolgheri Sup Rosso 2020 75cl Grattamacco",
-    "type": "Rosso",
-    "winery": "Grattamacco",
-    "grapes": "Cabernet Sauvignon, Merlot, Sangiovese."
-  },
-  {
-    "id": 328,
-    "name": "Guado Al Tasso Rosso 2021 75cl Antinori",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Guado al Tasso",
-    "grapes": "Cabernet Sauvignon, Merlot, Cabernet Franc."
-  },
-  {
-    "id": 329,
-    "name": "Guidoalberto Rosso 2022 150cl Tenuta San Guido",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Merlot."
-  },
-  {
-    "id": 330,
-    "name": "Guidoalberto Rosso 2022 75cl Tenuta San Guido",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Merlot."
-  },
-  {
-    "id": 331,
-    "name": "Hautes Ctes de Beaune Rosso 2022 Jean Ferry",
-    "type": "Rosso",
-    "winery": "Jean Ferry",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 332,
-    "name": "Hussonet Rosso 2020 75cl Haras De Pirque",
-    "type": "Rosso",
-    "winery": "Haras de Pirque",
-    "grapes": "100% Cabernet Sauvignon."
-  },
-  {
-    "id": 333,
-    "name": "i sodi Di San Niccolo Rosso 2018 150cl Castellare",
-    "type": "Rosso",
-    "winery": "Castellare di Castellina",
-    "grapes": "Sangiovese e Malvasia Nera."
-  },
-  {
-    "id": 334,
-    "name": "I Viaggiatori Rosso 2020 75cl Joaquin",
-    "type": "Rosso",
-    "winery": "Joaquin",
-    "grapes": "100% Aglianico."
-  },
-  {
-    "id": 335,
-    "name": "Il Bricco Barbaresco Rosso 2020 75cl Pio Cesare",
-    "type": "Rosso",
-    "winery": "Pio Cesare",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 336,
-    "name": "Il Nebbio Langhe Pio Cesare Rosso 75cl",
-    "type": "Rosso",
-    "winery": "Pio Cesare",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 337,
-    "name": "Inkino 76 Mesi Bianco 2017 75cl Maso Dei Kini",
-    "type": "Spumante",
-    "winery": "Maso Dei Kini",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 338,
-    "name": "Io Aura Lessini Bianco 2017 75cl Tonello",
-    "type": "Spumante",
-    "winery": "Tonello",
-    "grapes": "100% Durella."
-  },
-  {
-    "id": 339,
-    "name": "Ischia Biancolella Bianco 2023 75cl Cenatiempo",
-    "type": "Bianco",
-    "winery": "Cenatiempo",
-    "grapes": "100% Biancolella."
-  },
-  {
-    "id": 340,
-    "name": "L Alberello Rosso 2021 75cl Grattamacco",
-    "type": "Rosso",
-    "winery": "Grattamacco",
-    "grapes": "Cabernet Sauvignon, Cabernet Franc, Petit Verdot."
-  },
-  {
-    "id": 341,
-    "name": "L Isola Bianco Bianco 2023 75cl Hibiscus",
-    "type": "Bianco",
-    "winery": "Hibiscus",
-    "grapes": "Ansonica e Catarratto."
-  },
-  {
-    "id": 342,
-    "name": "la Tache Rosso 2021 75cl Romanee-Conti",
-    "type": "Rosso",
-    "winery": "Domaine de la Romanée-Conti",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 343,
-    "name": "La Torre a Civitella 2022 Bianco Sergio Mottura",
-    "type": "Bianco",
-    "winery": "Sergio Mottura",
-    "grapes": "100% Grechetto."
-  },
-  {
-    "id": 344,
-    "name": "Labruyere Prieur 2021 Labruyere Prieur Rosso",
-    "type": "Rosso",
-    "winery": "Labruyère-Prieur",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 345,
-    "name": "Lagrein Rosso 2024 Elena walch",
-    "type": "Rosso",
-    "winery": "Elena Walch",
-    "grapes": "100% Lagrein."
-  },
-  {
-    "id": 346,
-    "name": "Le Difese Rosso 2022 75cl Tenuta San Guido",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Sangiovese."
-  },
-  {
-    "id": 347,
-    "name": "Le Serre Nuove Rosso 2022 75cl Tenuta Dell Ornellaia",
-    "type": "Rosso",
-    "winery": "Tenuta dell'Ornellaia",
-    "grapes": "Merlot, Cabernet Sauvignon, Cabernet Franc, Petit Verdot."
-  },
-  {
-    "id": 348,
-    "name": "le sughere Rosso 2022 300cl Maremma Toscana",
-    "type": "Rosso",
-    "winery": "Rocca di Frassinello",
-    "grapes": "Sangiovese, Merlot, Cabernet Sauvignon."
-  },
-  {
-    "id": 349,
-    "name": "Le Sughere Rosso 2022 75cl Maremma Toscana",
-    "type": "Rosso",
-    "winery": "Rocca di Frassinello",
-    "grapes": "Sangiovese, Merlot, Cabernet Sauvignon."
-  },
-  {
-    "id": 350,
-    "name": "Le Volte Rosso 2022 75cl Tenuta Dell Ornellaia",
-    "type": "Rosso",
-    "winery": "Tenuta dell'Ornellaia",
-    "grapes": "Merlot, Sangiovese, Cabernet Sauvignon."
-  },
-  {
-    "id": 351,
-    "name": "Leonia Bianco 75cl Frescobaldi",
-    "type": "Spumante",
-    "winery": "Frescobaldi",
-    "grapes": "Chardonnay e Pinot Nero."
-  },
-  {
-    "id": 352,
-    "name": "Les Cretes Petite Arvain Bianco 2023 75cl Les Cretes",
-    "type": "Bianco",
-    "winery": "Les Cretes",
-    "grapes": "100% Petite Arvine."
-  },
-  {
-    "id": 353,
-    "name": "Lugana Bianco 2024 75cl Ca Dei Frati",
-    "type": "Bianco",
-    "winery": "Ca' dei Frati",
-    "grapes": "100% Turbiana."
-  },
-  {
-    "id": 354,
-    "name": "Lugana Metodo Classico Bianco 75cl Ca Dei Frati 2023",
-    "type": "Spumante",
-    "winery": "Ca' dei Frati",
-    "grapes": "100% Turbiana."
-  },
-  {
-    "id": 355,
-    "name": "Lugana Riserva Bianco 2018 75cl Zenato",
-    "type": "Bianco",
-    "winery": "Zenato",
-    "grapes": "100% Turbiana."
-  },
-  {
-    "id": 356,
-    "name": "Lupicaia Rosso 2018 Catello di Terriccio",
-    "type": "Rosso",
-    "winery": "Castello del Terriccio",
-    "grapes": "Cabernet Sauvignon, Merlot, Petit Verdot."
-  },
-  {
-    "id": 357,
-    "name": "Luppicaia Rosso 2015 75cl Castello Del Terriccio",
-    "type": "Rosso",
-    "winery": "Castello del Terriccio",
-    "grapes": "Cabernet Sauvignon, Merlot, Petit Verdot."
-  },
-  {
-    "id": 358,
-    "name": "Luppicaia Rosso 2018 300cl Castello Del Terriccio",
-    "type": "Rosso",
-    "winery": "Castello del Terriccio",
-    "grapes": "Cabernet Sauvignon, Merlot, Petit Verdot."
-  },
-  {
-    "id": 359,
-    "name": "Lynch Bages Pauillac grand cru classe 2017 Rosso",
-    "type": "Rosso",
-    "winery": "Château Lynch-Bages",
-    "grapes": "Cabernet Sauvignon, Merlot, Cabernet Franc, Petit Verdot."
-  },
-  {
-    "id": 360,
-    "name": "Maglen Riserva Rosso 2021 Tramin",
-    "type": "Rosso",
-    "winery": "Cantina Tramin",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 361,
-    "name": "Malvasia Bianco 2021 75cl Meroi",
-    "type": "Bianco",
-    "winery": "Meroi",
-    "grapes": "100% Malvasia."
-  },
-  {
-    "id": 362,
-    "name": "Marchesi Antinori Brut",
-    "type": "Spumante",
-    "winery": "Marchesi Antinori - Montenisa",
-    "grapes": "Chardonnay e Pinot Nero."
-  },
-  {
-    "id": 363,
-    "name": "Marchesi Antinori Chianti Rosso 2021-2022 75cl Antinori Classico Riserva",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori",
-    "grapes": "Sangiovese e complementari."
-  },
-  {
-    "id": 364,
-    "name": "Marchesi Antinori Francia Corta Brut 75cl Bianco",
-    "type": "Spumante",
-    "winery": "Marchesi Antinori - Montenisa",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 365,
-    "name": "Marchesi Guerrieri Gonzaga Bianco 2020 75cl San Leonardo",
-    "type": "Bianco",
-    "winery": "San Leonardo",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 366,
-    "name": "Maurizio zanella Ca del Bosco Rosso 2016",
-    "type": "Rosso",
-    "winery": "Ca Del Bosco",
-    "grapes": "Cabernet Sauvignon, Merlot, Cabernet Franc."
-  },
-  {
-    "id": 367,
-    "name": "Merlot Camo Al Lago Rosso 2020 75cl Inama",
-    "type": "Rosso",
-    "winery": "Inama",
-    "grapes": "100% Merlot."
-  },
-  {
-    "id": 368,
-    "name": "Merlot Riserva Rosso “DJJ” 2020 Weingut Niklas",
-    "type": "Rosso",
-    "winery": "Weingut Niklas",
-    "grapes": "100% Merlot."
-  },
-  {
-    "id": 369,
-    "name": "Mille E Una Notte Rosso 2020 75cl Donnafugata",
-    "type": "Rosso",
-    "winery": "Donnafugata",
-    "grapes": "Nero d'Avola e altri vitigni."
-  },
-  {
-    "id": 370,
-    "name": "Monte Bruna Rosso 2020 75cl Braida",
-    "type": "Rosso",
-    "winery": "Braida",
-    "grapes": "100% Barbera."
-  },
-  {
-    "id": 371,
-    "name": "Montesodi 1974 75cl rosso marchesi antinori",
-    "type": "Rosso",
-    "winery": "Marchesi Frescobaldi",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 372,
-    "name": "Monteverro Rosso Rosso 2014 75cl Monteverro",
-    "type": "Rosso",
-    "winery": "Monteverro",
-    "grapes": "Cabernet Sauvignon, Cabernet Franc, Merlot, Petit Verdot."
-  },
-  {
-    "id": 373,
-    "name": "Montevertine Rosso 2021 75cl Montevertine",
-    "type": "Rosso",
-    "winery": "Montevertine",
-    "grapes": "Sangiovese, Canaiolo, Colorino."
-  },
-  {
-    "id": 374,
-    "name": "Montus prestige 2017Rosso",
-    "type": "Rosso",
-    "winery": "Château Montus",
-    "grapes": "100% Tannat."
-  },
-  {
-    "id": 375,
-    "name": "Moratti Bianco 75cl",
-    "type": "Spumante",
-    "winery": "Castello di Cigognola",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 376,
-    "name": "Moratti Bianco oltre Po Pavese 75cl Bianco",
-    "type": "Spumante",
-    "winery": "Castello di Cigognola",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 377,
-    "name": "Morellino Di Scansano Rosso 2022 75cl Podere 414",
-    "type": "Rosso",
-    "winery": "Podere 414",
-    "grapes": "Sangiovese e complementari."
-  },
-  {
-    "id": 378,
-    "name": "Morgex Bianco 75cl Cave Du Mont Blanc 2020",
-    "type": "Bianco",
-    "winery": "Cave Mont Blanc",
-    "grapes": "100% Prié Blanc."
-  },
-  {
-    "id": 379,
-    "name": "Mosel Germany Bianco 2021 75cl Villa Huesgen",
-    "type": "Bianco",
-    "winery": "Villa Huesgen",
-    "grapes": "100% Riesling."
-  },
-  {
-    "id": 380,
-    "name": "Muscadet Sèvre et Maine, Royal Oyster 2023 Marc Bredif",
-    "type": "Bianco",
-    "winery": "Marc Brédif",
-    "grapes": "100% Melon de Bourgogne."
-  },
-  {
-    "id": 381,
-    "name": "Napa Valley Opus One Rosso 2019 75cl Opus One",
-    "type": "Rosso",
-    "winery": "Opus One",
-    "grapes": "Cabernet Sauvignon e blend bordolese."
-  },
-  {
-    "id": 382,
-    "name": "Nawari Rosso 2019 75cl Duca Di Salaparuta",
-    "type": "Rosso",
-    "winery": "Duca Di Salaparuta",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 383,
-    "name": "Nebbiolo Rosso 2023 75cl Elio Grasso",
-    "type": "Rosso",
-    "winery": "Elio Grasso",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 384,
-    "name": "Nebbiolo Rosso 2021 75cl Conterno Vigna Arione",
-    "type": "Rosso",
-    "winery": "Giacomo Conterno",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 385,
-    "name": "Nebbiolo Rosso 2023 75cl Bruno Giacosa",
-    "type": "Rosso",
-    "winery": "Bruno Giacosa",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 386,
-    "name": "Nebbiolo Superiore Rosso 2017 75cl Marrone",
-    "type": "Rosso",
-    "winery": "Marrone",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 387,
-    "name": "Nebbiolo Superiore Rosso 2019 75cl Marrone",
-    "type": "Rosso",
-    "winery": "Marrone",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 388,
-    "name": "Negroamaro Eloveni 2022 Rosso Feudi Salentini",
-    "type": "Rosso",
-    "winery": "Feudi Salentini",
-    "grapes": "100% Negroamaro."
-  },
-  {
-    "id": 389,
-    "name": "Nestri Rosso 2020 75cl Meroi",
-    "type": "Rosso",
-    "winery": "Meroi",
-    "grapes": "Merlot e Cabernet."
-  },
-  {
-    "id": 390,
-    "name": "Nuits Saint Georges 1er cru “Terres Blanches” 2021 Rosso",
-    "type": "Rosso",
-    "winery": "Domaine locale",
-    "grapes": "Pinot Noir o Chardonnay."
-  },
-  {
-    "id": 391,
-    "name": "Nuits Saint Georges Rosso 2018 75cl Domaine Chanson",
-    "type": "Rosso",
-    "winery": "Domaine Chanson",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 392,
-    "name": "Oratorio Di San Lorenzo Rosso 2018 75cl Inama",
-    "type": "Rosso",
-    "winery": "Inama",
-    "grapes": "100% Carmenere."
-  },
-  {
-    "id": 393,
-    "name": "Ornellaia Rosso 2018 75cl Tenuta Dell Ornellaia",
-    "type": "Rosso",
-    "winery": "Tenuta dell'Ornellaia",
-    "grapes": "Cabernet Sauvignon, Merlot, Cabernet Franc, Petit Verdot."
-  },
-  {
-    "id": 394,
-    "name": "Ornellaia Rosso 2019 75cl Tenuta Dell Ornellaia",
-    "type": "Rosso",
-    "winery": "Tenuta dell'Ornellaia",
-    "grapes": "Cabernet Sauvignon, Merlot, Cabernet Franc, Petit Verdot."
-  },
-  {
-    "id": 395,
-    "name": "Ornellaia Rosso 2021 75cl Tenuta Dell Ornellaia",
-    "type": "Rosso",
-    "winery": "Tenuta dell'Ornellaia",
-    "grapes": "Cabernet Sauvignon, Merlot, Cabernet Franc, Petit Verdot."
-  },
-  {
-    "id": 396,
-    "name": "Ornello Rosso 2021 150cl Rocca Di Frassinello",
-    "type": "Rosso",
-    "winery": "Rocca di Frassinello",
-    "grapes": "Sangiovese, Merlot, Cabernet Sauvignon, Syrah."
-  },
-  {
-    "id": 397,
-    "name": "Ornello Rosso 2022 300cl Rocca Di Frassinello",
-    "type": "Rosso",
-    "winery": "Rocca di Frassinello",
-    "grapes": "Sangiovese, Merlot, Cabernet Sauvignon, Syrah."
-  },
-  {
-    "id": 398,
-    "name": "Palizzi Rosso 2019 75cl Altomonte",
-    "type": "Rosso",
-    "winery": "Altomonte",
-    "grapes": "Uvaggio locale calabrese."
-  },
-  {
-    "id": 399,
-    "name": "Pandataria Bianco 2021 75cl Condidaterra",
-    "type": "Bianco",
-    "winery": "Condidaterra",
-    "grapes": "Greco, Fiano, Falanghina."
-  },
-  {
-    "id": 400,
-    "name": "Paul Sadi gran cru",
-    "type": "Champagne",
-    "winery": "Paul Sadi",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 401,
-    "name": "Pergole Torte Rosso 2021 75cl Montevertine",
-    "type": "Rosso",
-    "winery": "Montevertine",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 402,
-    "name": "Ferrari Perle Bianco 2019 75cl Ferrari",
-    "type": "Spumante",
-    "winery": "Ferrari",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 403,
-    "name": "Pernard Premier Cru Rosso 2017 75cl Domaine Chanson",
-    "type": "Rosso",
-    "winery": "Domaine Chanson",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 404,
-    "name": "Perrir jouet",
-    "type": "Champagne",
-    "winery": "Perrier Jouët",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 405,
-    "name": "Philipponnat Royale Réserve Brut 75cl",
-    "type": "Champagne",
-    "winery": "Philipponnat",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 406,
-    "name": "Pian Del Ciampolo Rosso 2022 75cl Montevertine",
-    "type": "Rosso",
-    "winery": "Montevertine",
-    "grapes": "Sangiovese, Canaiolo, Colorino."
-  },
-  {
-    "id": 407,
-    "name": "Piancastello Riserva Bianco 2020 75cl Endrizzi",
-    "type": "Spumante",
-    "winery": "Endrizzi",
-    "grapes": "Chardonnay e Pinot Nero."
-  },
-  {
-    "id": 408,
-    "name": "Piffer Vulcanite Bianco 2018-2019 75cl Neno",
-    "type": "Spumante",
-    "winery": "Neno",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 409,
-    "name": "Pinero Ca Del Bosco Rosso 2018",
-    "type": "Rosso",
-    "winery": "Ca Del Bosco",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 410,
-    "name": "Pinot 64 Bianco 75cl Calatroni 2020",
-    "type": "Spumante",
-    "winery": "Calatroni",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 411,
-    "name": "Pinot Grigio Bianco 2024 75cl Meroi",
-    "type": "Bianco",
-    "winery": "Meroi",
-    "grapes": "100% Pinot Grigio."
-  },
-  {
-    "id": 412,
-    "name": "Pinot Grigio Bianco 2022 75cl Livio Felluga",
-    "type": "Bianco",
-    "winery": "Livio Felluga",
-    "grapes": "100% Pinot Grigio."
-  },
-  {
-    "id": 413,
-    "name": "Pinot Nero Madruzzo Rosso 2021 75cl Pravis",
-    "type": "Rosso",
-    "winery": "Pravis",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 414,
-    "name": "Pinot nero Red Engel 2021 75cl Jermann Rosso",
-    "type": "Rosso",
-    "winery": "Jermann",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 415,
-    "name": "Pinot Nero Vallagarina Rosso 2020 75cl La Caldarola",
-    "type": "Rosso",
-    "winery": "La Caldarola",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 416,
-    "name": "Pinot Nero Vallagarina Rosso 2021 75cl La Caldarola",
-    "type": "Rosso",
-    "winery": "La Caldarola",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 417,
-    "name": "Pinot Noir Faiveley Mercurey Rosso 2022 Domaine Faiveley",
-    "type": "Rosso",
-    "winery": "Domaine Faiveley",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 418,
-    "name": "pn Ayc16 Champagne 75cl Bollinger",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 419,
-    "name": "pn Ayc17 Champagne 75cl Bollinger",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 420,
-    "name": "Pn Ayc18 Champagne 75cl Bollinger",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 421,
-    "name": "Poggio Ai Merli Rosso 2019 75cl Castellare",
-    "type": "Rosso",
-    "winery": "Castellare di Castellina",
-    "grapes": "100% Merlot."
-  },
-  {
-    "id": 422,
-    "name": "poggio alle Gazze Ornellaia 2014 Bianco",
-    "type": "Bianco",
-    "winery": "Tenuta dell'Ornellaia",
-    "grapes": "Sauvignon Blanc, Viognier, Vermentino."
-  },
-  {
-    "id": 423,
-    "name": "Poggio Della Costa Bianco 2022 75cl Sergio Mottura",
-    "type": "Bianco",
-    "winery": "Sergio Mottura",
-    "grapes": "100% Grechetto."
-  },
-  {
-    "id": 424,
-    "name": "Pol Roger sir Wiston Churchill 2015",
-    "type": "Champagne",
-    "winery": "Pol Roger",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 425,
-    "name": "Pol Roger sir Wiston Churchill 2015 AST",
-    "type": "Champagne",
-    "winery": "Pol Roger",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 426,
-    "name": "Pomerol 2018 La Violette Rosso",
-    "type": "Rosso",
-    "winery": "Château La Violette",
-    "grapes": "100% Merlot."
-  },
-  {
-    "id": 427,
-    "name": "Pouilly Fumé 2023-2024 Baron de Ladoucette Bianco",
-    "type": "Bianco",
-    "winery": "Baron de Ladoucette",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 428,
-    "name": "Pouilly fume riserva 2014 Baron de laduchette Bianco",
-    "type": "Bianco",
-    "winery": "Baron de Ladoucette",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 429,
-    "name": "Pouilly fume riserva 2015 Baron de laduchette Bianco",
-    "type": "Bianco",
-    "winery": "Baron de Ladoucette",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 430,
-    "name": "Prestige Bianco 150cl Ca Del Bosco",
-    "type": "Spumante",
-    "winery": "Ca Del Bosco",
-    "grapes": "Chardonnay, Pinot Bianco, Pinot Nero."
-  },
-  {
-    "id": 431,
-    "name": "Prestige Bianco 75cl Ca Del Bosco",
-    "type": "Spumante",
-    "winery": "Ca Del Bosco",
-    "grapes": "Chardonnay, Pinot Bianco, Pinot Nero."
-  },
-  {
-    "id": 432,
-    "name": "Prestige Bianco 75cl Ca Del Bosco Ast",
-    "type": "Spumante",
-    "winery": "Ca Del Bosco",
-    "grapes": "Chardonnay, Pinot Bianco, Pinot Nero."
-  },
-  {
-    "id": 433,
-    "name": "Primitivo di Manduria Santera 2022 Rosso Sassirossi",
-    "type": "Rosso",
-    "winery": "Sassirossi",
-    "grapes": "100% Primitivo."
-  },
-  {
-    "id": 434,
-    "name": "R de Rieussec Blanc AOP 2017 Baron de Rothschild Bianco",
-    "type": "Bianco",
-    "winery": "Château Rieussec",
-    "grapes": "Sauvignon Blanc e Semillon."
-  },
-  {
-    "id": 435,
-    "name": "R.D. Bollinger Bianco 2008 75cl Bollinger",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 436,
-    "name": "R.D. Bollinger Bianco 2008 75cl Bollinger ASTU",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 437,
-    "name": "R.D. Bollinger Bianco MAGNUM 150cl Bollinger",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 438,
-    "name": "Raventos i Blanc 2021",
-    "type": "Spumante",
-    "winery": "Raventós i Blanc",
-    "grapes": "Xarel-lo, Macabeo, Parellada."
-  },
-  {
-    "id": 439,
-    "name": "Raventos i Blanc 2021 Spagana 75cl",
-    "type": "Spumante",
-    "winery": "Raventós i Blanc",
-    "grapes": "Xarel-lo, Macabeo, Parellada."
-  },
-  {
-    "id": 440,
-    "name": "Ribolla Gialla - Vinnae Bianco 2023 150cl Jermann",
-    "type": "Bianco",
-    "winery": "Jermann",
-    "grapes": "Ribolla Gialla, Friulano, Riesling."
-  },
-  {
-    "id": 441,
-    "name": "Ribolla Gialla - Vinnae Bianco 2023 75cl Jermann",
-    "type": "Bianco",
-    "winery": "Jermann",
-    "grapes": "Ribolla Gialla, Friulano, Riesling."
-  },
-  {
-    "id": 442,
-    "name": "Ribolla GiallaBianco Bianco 2022 75cl Bastianich",
-    "type": "Bianco",
-    "winery": "Bastianich",
-    "grapes": "100% Ribolla Gialla."
-  },
-  {
-    "id": 443,
-    "name": "Riesling Valle Isarco Bianco 2020 75cl Villsheider",
-    "type": "Bianco",
-    "winery": "Villscheider",
-    "grapes": "100% Riesling."
-  },
-  {
-    "id": 444,
-    "name": "Rioja Rosso 2018 75cl Marques De Murrieta",
-    "type": "Rosso",
-    "winery": "Marqués de Murrieta",
-    "grapes": "Tempranillo, Mazuelo, Graciano."
-  },
-  {
-    "id": 445,
-    "name": "Ripasso Monte Lodetta Rosso 2017 75cl Romano Dal Forno",
-    "type": "Rosso",
-    "winery": "Romano Dal Forno",
-    "grapes": "Corvina, Rondinella, Croatina, Oseleta."
-  },
-  {
-    "id": 446,
-    "name": "Ripasso Rosso 2019 75cl Villa Rinaldi",
-    "type": "Rosso",
-    "winery": "Villa Rinaldi",
-    "grapes": "Corvina e Rondinella."
-  },
-  {
-    "id": 447,
-    "name": "Ripasso Rosso 2023 150cl Boni Alessandro",
-    "type": "Rosso",
-    "winery": "Boni Alessandro",
-    "grapes": "Corvina e Rondinella."
-  },
-  {
-    "id": 448,
-    "name": "Ripasso Rosso 2023 75cl Boni Alessandro",
-    "type": "Rosso",
-    "winery": "Boni Alessandro",
-    "grapes": "Corvina e Rondinella."
-  },
-  {
-    "id": 449,
-    "name": "Riserva Camp Gros Martinenga Rosso 2014 75cl Marchesi Di Gresy",
-    "type": "Rosso",
-    "winery": "Marchesi di Grésy",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 450,
-    "name": "Riserva Camp Gros Martinenga Rosso 2015 75cl Marchesi Di Gresy",
-    "type": "Rosso",
-    "winery": "Marchesi di Grésy",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 451,
-    "name": "Riserva Camp Gros Martinenga Rosso 2017 75cl Marchesi Di Gresy",
-    "type": "Rosso",
-    "winery": "Marchesi di Grésy",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 452,
-    "name": "Riserva Del Fondatore Bianco 2012 75cl Zamuner Daniele",
-    "type": "Spumante",
-    "winery": "Zamuner Daniele",
-    "grapes": "Pinot Nero, Pinot Meunier, Chardonnay."
-  },
-  {
-    "id": 453,
-    "name": "Rizzini 76 Mesi Bianco 75cl Angela Boniotti",
-    "type": "Spumante",
-    "winery": "Angela Boniotti",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 454,
-    "name": "Ros Di Buri Rosso 2019 75cl Meroi",
-    "type": "Rosso",
-    "winery": "Meroi",
-    "grapes": "100% Merlot."
-  },
-  {
-    "id": 455,
-    "name": "Rose Rosa Rose 75cl Villa Rinaldi 2019",
-    "type": "Spumante",
-    "winery": "Villa Rinaldi",
-    "grapes": "Corvina e Rondinella."
-  },
-  {
-    "id": 456,
-    "name": "Rosso di Montalcino 75cl Silvio Nardi 2022",
-    "type": "Rosso",
-    "winery": "Silvio Nardi",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 457,
-    "name": "Rosso Di Montalcino Rosso 2022 75cl Casanova di Neri",
-    "type": "Rosso",
-    "winery": "Casanova di Neri",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 458,
-    "name": "Sagrantino Rosso 2020 75cl Napolini Montefalco",
-    "type": "Rosso",
-    "winery": "Napolini Montefalco",
-    "grapes": "100% Sagrantino."
-  },
-  {
-    "id": 459,
-    "name": "Saint Vivant Rosso 2019 75cl Romanee-Conti",
-    "type": "Rosso",
-    "winery": "Domaine de la Romanée-Conti",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 460,
-    "name": "San Giovanni Della Sala Bianco 2023 75cl Antinori",
-    "type": "Bianco",
-    "winery": "Marchesi Antinori - Castello della Sala",
-    "grapes": "Grechetto, Procanico, Pinot Bianco, Viognier."
-  },
-  {
-    "id": 461,
-    "name": "San Leonardo Rosso 2015 75cl San Leonardo",
-    "type": "Rosso",
-    "winery": "San Leonardo",
-    "grapes": "Cabernet Sauvignon, Carmenere, Merlot."
-  },
-  {
-    "id": 462,
-    "name": "San Leonardo Rosso 2016 75cl San Leonardo",
-    "type": "Rosso",
-    "winery": "San Leonardo",
-    "grapes": "Cabernet Sauvignon, Carmenere, Merlot."
-  },
-  {
-    "id": 463,
-    "name": "San Leonardo Rosso 2017 75cl San Leonardo",
-    "type": "Rosso",
-    "winery": "San Leonardo",
-    "grapes": "Cabernet Sauvignon, Carmenere, Merlot."
-  },
-  {
-    "id": 464,
-    "name": "San Leonardo Rosso 2018 150cl San Leonardo",
-    "type": "Rosso",
-    "winery": "San Leonardo",
-    "grapes": "Cabernet Sauvignon, Carmenere, Merlot."
-  },
-  {
-    "id": 465,
-    "name": "San Leonardo Rosso 2018 75cl San Leonardo",
-    "type": "Rosso",
-    "winery": "San Leonardo",
-    "grapes": "Cabernet Sauvignon, Carmenere, Merlot."
-  },
-  {
-    "id": 466,
-    "name": "San Leonardo Rosso 2019 150cl San Leonardo",
-    "type": "Rosso",
-    "winery": "San Leonardo",
-    "grapes": "Cabernet Sauvignon, Carmenere, Merlot."
-  },
-  {
-    "id": 467,
-    "name": "San Leonardo Rosso 2019 300cl San Leonardo",
-    "type": "Rosso",
-    "winery": "San Leonardo",
-    "grapes": "Cabernet Sauvignon, Carmenere, Merlot."
-  },
-  {
-    "id": 468,
-    "name": "San Leonardo Rosso 2019 75cl San Leonardo",
-    "type": "Rosso",
-    "winery": "San Leonardo",
-    "grapes": "Cabernet Sauvignon, Carmenere, Merlot."
-  },
-  {
-    "id": 469,
-    "name": "Sancerre Blanc Bianco 2018 150cl Baron De Ladoucette",
-    "type": "Bianco",
-    "winery": "Baron de Ladoucette",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 470,
-    "name": "Sancerre Blanc Bianco 2023-2024 75cl COMTE LAFOND",
-    "type": "Bianco",
-    "winery": "Baron de Ladoucette - Comte Lafond",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 471,
-    "name": "Sancerre Blanc Comte Lafonde 2023 Bianco Baron de Ladoucette",
-    "type": "Bianco",
-    "winery": "Baron de Ladoucette - Comte Lafond",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 472,
-    "name": "Sassicaia Rosso 2018 75cl Tenuta San Guido",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Cabernet Franc."
-  },
-  {
-    "id": 473,
-    "name": "Sassicaia Rosso 2019 75cl Tenuta San Guido",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Cabernet Franc."
-  },
-  {
-    "id": 474,
-    "name": "Sassicaia Rosso 2020 1500cl Tenuta San Guido",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Cabernet Franc."
-  },
-  {
-    "id": 475,
-    "name": "Sassicaia Rosso 2020 150cl Tenuta San Guido",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Cabernet Franc."
-  },
-  {
-    "id": 476,
-    "name": "Sassicaia Rosso 2021 150cl Tenuta San Guido",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Cabernet Franc."
-  },
-  {
-    "id": 477,
-    "name": "Sassicaia Rosso 2021 300cl Tenuta San Guido",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Cabernet Franc."
-  },
-  {
-    "id": 478,
-    "name": "Sassicaia Rosso 2021 75cl Tenuta San Guido",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Cabernet Franc."
-  },
-  {
-    "id": 479,
-    "name": "Saten Millesimato Bianco 75cl Ca Del Bosco",
-    "type": "Spumante",
-    "winery": "Ca Del Bosco",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 480,
-    "name": "Sauternes Liquoroso 1996 75cl Chateau D Yquem",
-    "type": "Dolce/Liquoroso",
-    "winery": "Château d'Yquem",
-    "grapes": "Semillon e Sauvignon Blanc."
-  },
-  {
-    "id": 481,
-    "name": "Sauvignon Bianco 2024 75cl Meroi",
-    "type": "Bianco",
-    "winery": "Meroi",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 482,
-    "name": "Sauvignon Bianco 2022 75cl Miani",
-    "type": "Bianco",
-    "winery": "Miani",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 483,
-    "name": "Sauvignon Sanct Valentin Bianco 2023 S. Michele Appiano",
-    "type": "Bianco",
-    "winery": "San Michele Appiano",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 484,
-    "name": "Savigny-les-Beaune 1er Cru “Les Vergelesses” 2021 Rosso Jean Ferry",
-    "type": "Rosso",
-    "winery": "Jean Ferry",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 485,
-    "name": "Savigny-les-Beaune 1er Cru “Les Vergelesses” 2022 Jean fery Bianco",
-    "type": "Bianco",
-    "winery": "Jean Ferry",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 486,
-    "name": "Scilla Rosso 2022 75cl Crisera",
-    "type": "Rosso",
-    "winery": "Crisera",
-    "grapes": "Prunesta e Malvasia Nera."
-  },
-  {
-    "id": 487,
-    "name": "Selezione Di Famiglia Bianco 200875cl Milazzo",
-    "type": "Bianco",
-    "winery": "Milazzo",
-    "grapes": "Chardonnay e Inzolia."
-  },
-  {
-    "id": 488,
-    "name": "Selezione Di Famiglia Bianco 2013 75cl Milazzo",
-    "type": "Bianco",
-    "winery": "Milazzo",
-    "grapes": "Chardonnay e Inzolia."
-  },
-  {
-    "id": 489,
-    "name": "Selezione Di Famiglia Bianco 2016 75cl Milazzo",
-    "type": "Bianco",
-    "winery": "Milazzo",
-    "grapes": "Chardonnay e Inzolia."
-  },
-  {
-    "id": 490,
-    "name": "Selezione Di Famiglia Bianco 2020 75cl Milazzo",
-    "type": "Bianco",
-    "winery": "Milazzo",
-    "grapes": "Chardonnay e Inzolia."
-  },
-  {
-    "id": 491,
-    "name": "Sito Moresco Rosso 2020 75cl Gaja",
-    "type": "Rosso",
-    "winery": "Gaja",
-    "grapes": "Nebbiolo, Merlot, Cabernet Sauvignon."
-  },
-  {
-    "id": 492,
-    "name": "Sito Moresco Rosso 2021 75cl Gaja",
-    "type": "Rosso",
-    "winery": "Gaja",
-    "grapes": "Nebbiolo, Merlot, Cabernet Sauvignon."
-  },
-  {
-    "id": 493,
-    "name": "Solaia Rosso 2020 75cl Antinori",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Tenuta Tignanello",
-    "grapes": "75% Cabernet Sauvignon, 20% Sangiovese, 5% Cabernet Franc."
-  },
-  {
-    "id": 494,
-    "name": "Solaia Rosso 2021 75cl Antinori",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Tenuta Tignanello",
-    "grapes": "75% Cabernet Sauvignon, 20% Sangiovese, 5% Cabernet Franc."
-  },
-  {
-    "id": 495,
-    "name": "Spelt Rosso 2021 75cl La Valentina",
-    "type": "Rosso",
-    "winery": "La Valentina",
-    "grapes": "100% Montepulciano."
-  },
-  {
-    "id": 496,
-    "name": "St. Georges St. Emilion Chateau Calon 2015 Jean Noel Boidron",
-    "type": "Rosso",
-    "winery": "Jean-Noël Boidron",
-    "grapes": "Merlot, Cabernet Franc, Cabernet Sauvignon."
-  },
-  {
-    "id": 497,
-    "name": "Syra Case Via Rosso 2020 75cl Fontodi",
-    "type": "Rosso",
-    "winery": "Fontodi",
-    "grapes": "100% Syrah."
-  },
-  {
-    "id": 498,
-    "name": "Taurasi Ris Della Societa Rosso 2014 75cl Joaquin",
-    "type": "Rosso",
-    "winery": "Joaquin",
-    "grapes": "100% Aglianico."
-  },
-  {
-    "id": 499,
-    "name": "Tenuta guado al tasso Vermentino 2024 Bianco Antinori",
-    "type": "Bianco",
-    "winery": "Marchesi Antinori - Guado al Tasso",
-    "grapes": "100% Vermentino."
-  },
-  {
-    "id": 500,
-    "name": "Terra Di Lavoro Rosso 2017 75cl Gallardi",
-    "type": "Rosso",
-    "winery": "Galardi",
-    "grapes": "Aglianico e Piedirosso."
-  },
-  {
-    "id": 501,
-    "name": "Terre Alte Bianco 2021 75cl Livio Felluga",
-    "type": "Bianco",
-    "winery": "Livio Felluga",
-    "grapes": "Friulano, Pinot Bianco, Sauvignon."
-  },
-  {
-    "id": 502,
-    "name": "Terre Rosso 75cl San Leonardo 2022",
-    "type": "Rosso",
-    "winery": "San Leonardo",
-    "grapes": "Cabernet Sauvignon, Merlot, Carmenere."
-  },
-  {
-    "id": 503,
-    "name": "Thomas Pico Bianco 2022 Chablis",
-    "type": "Bianco",
-    "winery": "Thomas Pico",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 504,
-    "name": "tignanello Rosso 2019 75cl Antinori",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Tenuta Tignanello",
-    "grapes": "80% Sangiovese, 20% Cabernet."
-  },
-  {
-    "id": 505,
-    "name": "Tignanello Rosso 2020 75cl Antinori 150cl",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Tenuta Tignanello",
-    "grapes": "80% Sangiovese, 20% Cabernet."
-  },
-  {
-    "id": 506,
-    "name": "Tignanello Rosso 2021 75cl Antinori",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Tenuta Tignanello",
-    "grapes": "80% Sangiovese, 20% Cabernet."
-  },
-  {
-    "id": 507,
-    "name": "Tinata Rosso Rosso 2014 75cl Monteverro",
-    "type": "Rosso",
-    "winery": "Monteverro",
-    "grapes": "Syrah e Grenache."
-  },
-  {
-    "id": 508,
-    "name": "Tintillia Macchia Rossa Rosso 2017 75cl Claudio Cipressi",
-    "type": "Rosso",
-    "winery": "Claudio Cipressi",
-    "grapes": "100% Tintilia."
-  },
-  {
-    "id": 509,
-    "name": "Trento Doc Rose 150cl Letrari",
-    "type": "Spumante",
-    "winery": "Letrari",
-    "grapes": "Pinot Nero e Chardonnay."
-  },
-  {
-    "id": 510,
-    "name": "Trento Doc Rose 75cl Letrari",
-    "type": "Spumante",
-    "winery": "Letrari",
-    "grapes": "Pinot Nero e Chardonnay."
-  },
-  {
-    "id": 511,
-    "name": "Turriga Rosso 2019 75cl Argiolas",
-    "type": "Rosso",
-    "winery": "Argiolas",
-    "grapes": "Cannonau, Carignano, Bovale Sardo, Malvasia Nera."
-  },
-  {
-    "id": 512,
-    "name": "Ultra Brut Edizione Limitata Bianco 2010 75cl Villa Rinaldi",
-    "type": "Spumante",
-    "winery": "Villa Rinaldi",
-    "grapes": "Chardonnay e Pinot Nero."
-  },
-  {
-    "id": 513,
-    "name": "Un Anno Dopo Bianco 2021 75cl Quarto Moro",
-    "type": "Bianco",
-    "winery": "Quarto Moro",
-    "grapes": "100% Vermentino."
-  },
-  {
-    "id": 514,
-    "name": "vallee d aoste donnas 2019-2020",
-    "type": "Rosso",
-    "winery": "Caves de Donnas",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 515,
-    "name": "Vermentino Tenuta guado al tasso 2024 Bianco Antinori",
-    "type": "Bianco",
-    "winery": "Marchesi Antinori - Guado al Tasso",
-    "grapes": "100% Vermentino."
-  },
-  {
-    "id": 516,
-    "name": "Vermentino Tenuta gualdo del re 2024 Bianco",
-    "type": "Bianco",
-    "winery": "Gualdo del Re",
-    "grapes": "100% Vermentino."
-  },
-  {
-    "id": 517,
-    "name": "Verso Sera Rosso 2021 75cl Velenosi",
-    "type": "Rosso",
-    "winery": "Velenosi",
-    "grapes": "100% Montepulciano."
-  },
-  {
-    "id": 518,
-    "name": "Vespa Bianco Bianco 2019 75cl Bastianich",
-    "type": "Bianco",
-    "winery": "Bastianich",
-    "grapes": "Chardonnay, Sauvignon, Picolit."
-  },
-  {
-    "id": 519,
-    "name": "Vesuvio In Anfora Rosso 2020 75cl Olivella",
-    "type": "Rosso",
-    "winery": "Olivella",
-    "grapes": "Piedirosso e Aglianico."
-  },
-  {
-    "id": 520,
-    "name": "Vigna Loreto Rosso 2016 75cl Mastro Janni",
-    "type": "Rosso",
-    "winery": "Mastrojanni",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 521,
-    "name": "Vigna Zitelle Sauvignon Bianco 2021 75cl Meroi",
-    "type": "Bianco",
-    "winery": "Meroi",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 522,
-    "name": "Vigneti Di Carbonare Bianco 2022 75cl Inama",
-    "type": "Bianco",
-    "winery": "Inama",
-    "grapes": "100% Garganega."
-  },
-  {
-    "id": 523,
-    "name": "Villa Antinori Rosso 2021 75cl Antinori",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori",
-    "grapes": "Sangiovese, Cabernet Sauvignon, Merlot, Syrah."
-  },
-  {
-    "id": 524,
-    "name": "Villa Gresti 75cl San Leonardo 2021",
-    "type": "Rosso",
-    "winery": "San Leonardo",
-    "grapes": "Merlot e Carmenere."
-  },
-  {
-    "id": 525,
-    "name": "Vintage Tunina Bianco 2022 75cl Jermann",
-    "type": "Bianco",
-    "winery": "Jermann",
-    "grapes": "Sauvignon, Chardonnay, Ribolla Gialla, Malvasia, Picolit."
-  },
-  {
-    "id": 526,
-    "name": "Vitovska Macerato Bianco 2022 75cl Skerk",
-    "type": "Bianco",
-    "winery": "Skerk",
-    "grapes": "100% Vitovska."
-  },
-  {
-    "id": 527,
-    "name": "Vulcaia Fume Sauvignon Bianco 2023 75cl Inama",
-    "type": "Bianco",
-    "winery": "Inama",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 528,
-    "name": "Yarden Chardonnay Bianco 2022 75cl Golan Yarden",
-    "type": "Bianco",
-    "winery": "Golan Heights Winery",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 529,
-    "name": "Zinfadel Rosso 2022 75cl Frencis Ford Coppola",
-    "type": "Rosso",
-    "winery": "Francis Ford Coppola",
-    "grapes": "100% Zinfandel."
-  },
-  {
-    "id": 530,
-    "name": "Champagne Bianco 75cl Roeder Vintage 2015",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 531,
-    "name": "Mikulski F. Bourgogne cote D'or Blanc 2023",
-    "type": "Bianco",
-    "winery": "Francois Mikulski",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 532,
-    "name": "Cuvée Prestige Franciacorta Extra Brut Edizione 45 6L",
-    "type": "Spumante",
-    "winery": "Ca Del Bosco",
-    "grapes": "Chardonnay, Pinot Bianco, Pinot Nero."
-  },
-  {
-    "id": 533,
-    "name": "La Fiorita Rose Francia Corta",
-    "type": "Spumante",
-    "winery": "La Fiorita",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 534,
-    "name": "Gewurztraminer Alois Lageder bianco 75CL",
-    "type": "Bianco",
-    "winery": "Alois Lageder",
-    "grapes": "100% Gewürztraminer."
-  },
-  {
-    "id": 535,
-    "name": "Casa Caterina 36 mesi 75cl Spumante",
-    "type": "Spumante",
-    "winery": "Casa Caterina",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 536,
-    "name": "Gaja Sito moresco Langhe Dop 2022 75cl rosso",
-    "type": "Rosso",
-    "winery": "Gaja",
-    "grapes": "Nebbiolo, Merlot, Cabernet Sauvignon."
-  },
-  {
-    "id": 537,
-    "name": "Gaja Dagromis Barolo DOP 2020 75cl Rosso",
-    "type": "Rosso",
-    "winery": "Gaja",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 538,
-    "name": "Langlois Brut Reserve Cremant 75cl Spumante",
-    "type": "Spumante",
-    "winery": "Langlois-Chateau",
-    "grapes": "Chenin Blanc, Chardonnay, Cabernet Franc."
-  },
-  {
-    "id": 539,
-    "name": "Bollinger B16 75cl",
-    "type": "Champagne",
-    "winery": "Bollinger",
-    "grapes": "100% Pinot Noir."
-  },
-  {
-    "id": 540,
-    "name": "Champagne Bianco 75cl Roeder 245",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 541,
-    "name": "Le Difese Rosso 2023 Tenuta San Guido 75cl",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Sangiovese."
-  },
-  {
-    "id": 542,
-    "name": "GuidoAlberto Rosso 2023 Tenuta San Guido 75cl",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Merlot."
-  },
-  {
-    "id": 543,
-    "name": "Turriga Rosso 2021 Argiolas 75cl",
-    "type": "Rosso",
-    "winery": "Argiolas",
-    "grapes": "Cannonau, Carignano, Bovale Sardo, Malvasia Nera."
-  },
-  {
-    "id": 544,
-    "name": "Sassicaia 2022 Rosso Tenuta San Guido 75cl",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Cabernet Franc."
-  },
-  {
-    "id": 545,
-    "name": "Fiorduva 2023 Furrore Bianco Marisa cuomo 75cl",
-    "type": "Bianco",
-    "winery": "Marisa Cuomo",
-    "grapes": "Fenile, Ginestra, Ripoli."
-  },
-  {
-    "id": 546,
-    "name": "Sauternes Symphonie de clos haut Peyraguey 37cl",
-    "type": "Dolce/Liquoroso",
-    "winery": "Clos Haut-Peyraguey",
-    "grapes": "Semillon e Sauvignon Blanc."
-  },
-  {
-    "id": 547,
-    "name": "Passito Sicilia Hira/colosi 50cl 2021",
-    "type": "Dolce/Liquoroso",
-    "winery": "Colosi",
-    "grapes": "100% Moscato Bianco."
-  },
-  {
-    "id": 548,
-    "name": "Pinot Nero Riserva 2021 Brunnenhof 75cl",
-    "type": "Rosso",
-    "winery": "Brunnenhof",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 549,
-    "name": "Santa Trada al Pilone 2023 Crisera 75cl Rosso",
-    "type": "Rosso",
-    "winery": "Crisera",
-    "grapes": "Prunesta e Malvasia Nera."
-  },
-  {
-    "id": 550,
-    "name": "Riesling Enkircher 2023 Villa Huesgen 75cl Bianco",
-    "type": "Bianco",
-    "winery": "Villa Huesgen",
-    "grapes": "100% Riesling."
-  },
-  {
-    "id": 551,
-    "name": "Le Sughere Rosso 150cl Maremma Toscana",
-    "type": "Rosso",
-    "winery": "Rocca di Frassinello",
-    "grapes": "Sangiovese, Merlot, Cabernet Sauvignon."
-  },
-  {
-    "id": 552,
-    "name": "Milazzo Nature 75cl Spumante",
-    "type": "Spumante",
-    "winery": "Milazzo",
-    "grapes": "Chardonnay e Inzolia."
-  },
-  {
-    "id": 553,
-    "name": "Champagne Bianco 75cl Jacquesson 748",
-    "type": "Champagne",
-    "winery": "Jacquesson",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 554,
-    "name": "BRAMITO 2024 Umbria igt Chardonnay Bianco 75cl",
-    "type": "Bianco",
-    "winery": "Marchesi Antinori - Castello della Sala",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 555,
-    "name": "Cervaro Della Sala 2023 Bianco 75cl",
-    "type": "Bianco",
-    "winery": "Marchesi Antinori - Castello della Sala",
-    "grapes": "Chardonnay e Grechetto."
-  },
-  {
-    "id": 556,
-    "name": "Le Pergole Torte 2022 75cl Rosso Montevertine",
-    "type": "Rosso",
-    "winery": "Montevertine",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 557,
-    "name": "Le Pergole Torte 3l rosso Montevertine 2022",
-    "type": "Rosso",
-    "winery": "Montevertine",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 558,
-    "name": "MONTEVERTINE 2022 ROSSO 75CL",
-    "type": "Rosso",
-    "winery": "Montevertine",
-    "grapes": "Sangiovese, Canaiolo, Colorino."
-  },
-  {
-    "id": 559,
-    "name": "PIAN DEL CIAMPOLO 2023 MONTEVERTINE ROSSO 75 CL",
-    "type": "Rosso",
-    "winery": "Montevertine",
-    "grapes": "Sangiovese, Canaiolo, Colorino."
-  },
-  {
-    "id": 560,
-    "name": "Champagne Roederer collection 244 Magnum 1,5l",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 561,
-    "name": "GEWUZTRAMINER DOC FALLWIND 75CL MICHEL-EPPAN",
-    "type": "Bianco",
-    "winery": "San Michele Appiano",
-    "grapes": "100% Gewürztraminer."
-  },
-  {
-    "id": 562,
-    "name": "RIESLING DOC FALLWIND 2024 MICHAEL EPPAN 75CL",
-    "type": "Bianco",
-    "winery": "San Michele Appiano",
-    "grapes": "100% Riesling."
-  },
-  {
-    "id": 563,
-    "name": "PINOT NERO RISERVA DOC FALLWIND 2022 MICHAEL EPPAN 75CL",
-    "type": "Rosso",
-    "winery": "San Michele Appiano",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 564,
-    "name": "LOUIS ROEDERER 6L",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 565,
-    "name": "Barolo Ginestra Case Mate Rosso 2021 75cl Elio Grasso",
-    "type": "Rosso",
-    "winery": "Elio Grasso",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 566,
-    "name": "Nebbiolo Rosso 2024 75cl Elio Grasso",
-    "type": "Rosso",
-    "winery": "Elio Grasso",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 567,
-    "name": "MINUTY ROSE 75CL 2024",
-    "type": "Rosé",
-    "winery": "Château Minuty",
-    "grapes": "Grenache, Cinsault, Syrah."
-  },
-  {
-    "id": 568,
-    "name": "RUINART B/B 75CL",
-    "type": "Champagne",
-    "winery": "Ruinart",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 569,
-    "name": "PRINCIPESSA LURETTA 75CL",
-    "type": "Spumante",
-    "winery": "Luretta",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 570,
-    "name": "GUTTURNIO SUP. ALA DEL DRAGO 75CL LURETTA",
-    "type": "Rosso",
-    "winery": "Luretta",
-    "grapes": "Barbera e Bonarda."
-  },
-  {
-    "id": 571,
-    "name": "FERRAIA LE STAFFE GUTTURNIO 75CL",
-    "type": "Rosso",
-    "winery": "Ferraia",
-    "grapes": "Barbera e Bonarda."
-  },
-  {
-    "id": 572,
-    "name": "LANSON ROSE 75CL",
-    "type": "Champagne",
-    "winery": "Lanson",
-    "grapes": "Pinot Noir, Chardonnay, Meunier."
-  },
-  {
-    "id": 573,
-    "name": "CONT'UGO 2023 BOLGHERI 75CL",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Guado al Tasso",
-    "grapes": "100% Merlot."
-  },
-  {
-    "id": 574,
-    "name": "VIGNAFERROVIA 2019 BRUNELLO 75CL",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Pian Delle Vigne",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 575,
-    "name": "TIGNANELLO 2022 75CL",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Tenuta Tignanello",
-    "grapes": "80% Sangiovese, 20% Cabernet."
-  },
-  {
-    "id": 576,
-    "name": "CASSA MIX BAROLO 2020 ANTINORI",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Prunotto",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 577,
-    "name": "SAN W ALFREDO 2021 75CL",
-    "type": "Rosso",
-    "winery": "Gualdo del Re",
-    "grapes": "100% Merlot."
-  },
-  {
-    "id": 578,
-    "name": "SELEZIONE DI FAMIGLIA 2008 75CL",
-    "type": "Bianco",
-    "winery": "Milazzo",
-    "grapes": "Chardonnay e Inzolia."
-  },
-  {
-    "id": 579,
-    "name": "SELEZIONE DI FAMIGLIA 2014 75CL",
-    "type": "Bianco",
-    "winery": "Milazzo",
-    "grapes": "Chardonnay e Inzolia."
-  },
-  {
-    "id": 580,
-    "name": "SELEZIONE DI FAMIGLIA 2016",
-    "type": "Bianco",
-    "winery": "Milazzo",
-    "grapes": "Chardonnay e Inzolia."
-  },
-  {
-    "id": 581,
-    "name": "SELEZIONE DI FAMIGLIA 2020 150CL MILAZZO",
-    "type": "Bianco",
-    "winery": "Milazzo",
-    "grapes": "Chardonnay e Inzolia."
-  },
-  {
-    "id": 582,
-    "name": "RUINART BLANC DE BLANC MAGNUM",
-    "type": "Champagne",
-    "winery": "Ruinart",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 583,
-    "name": "Gattinara Rosso 2022 75cl Conterno Nervi",
-    "type": "Rosso",
-    "winery": "Giacomo Conterno - Nervi",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 584,
-    "name": "Barolo Francia 2021 Rosso 75cl Conterno",
-    "type": "Rosso",
-    "winery": "Giacomo Conterno",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 585,
-    "name": "BAROLO RISERVA MONFORTINO 2019 75CL",
-    "type": "Rosso",
-    "winery": "Giacomo Conterno",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 586,
-    "name": "Mille E Una Notte Rosso 2021 75cl Donnafugata",
-    "type": "Rosso",
-    "winery": "Donnafugata",
-    "grapes": "Nero d'Avola e blend siciliano."
-  },
-  {
-    "id": 587,
-    "name": "KABIR MOSCATO DI PANTELLERIA 2024 75CL",
-    "type": "Dolce/Liquoroso",
-    "winery": "Donnafugata",
-    "grapes": "100% Zibibbo (Moscato d'Alessandria)."
-  },
-  {
-    "id": 588,
-    "name": "BEN RYE PASSITO PANTELLERIA 2023 375ML",
-    "type": "Dolce/Liquoroso",
-    "winery": "Donnafugata",
-    "grapes": "100% Zibibbo (Moscato d'Alessandria)."
-  },
-  {
-    "id": 589,
-    "name": "BEN RYE PASSITO DI PANTELLERIA 2023 75CL",
-    "type": "Dolce/Liquoroso",
-    "winery": "Donnafugata",
-    "grapes": "100% Zibibbo (Moscato d'Alessandria)."
-  },
-  {
-    "id": 590,
-    "name": "SPUMANTE GOLD 2019 ROSE DOLCE E GABBANA 75CL",
-    "type": "Spumante",
-    "winery": "Donnafugata",
-    "grapes": "100% Nerello Mascalese."
-  },
-  {
-    "id": 591,
-    "name": "GATTOPARDO MILLE E UNA NOTTE COFRET 75CL 2021",
-    "type": "Rosso",
-    "winery": "Donnafugata",
-    "grapes": "Nero d'Avola e altri vitigni."
-  },
-  {
-    "id": 592,
-    "name": "SUL VULCANO ETNA BIANCO (LATTA) 75CL 2022",
-    "type": "Bianco",
-    "winery": "Donnafugata",
-    "grapes": "100% Carricante."
-  },
-  {
-    "id": 593,
-    "name": "CERASUOLO 2023 FLORAMUNDI DONNA FUGATA (LATTA) 75CL",
-    "type": "Rosso",
-    "winery": "Donnafugata",
-    "grapes": "Nero d'Avola e Frappato."
-  },
-  {
-    "id": 594,
-    "name": "nicolas Feuillatte ast mika 75cl",
-    "type": "Champagne",
-    "winery": "Nicolas Feuillatte",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 595,
-    "name": "MONLEALE VIGNETI MASSA 75CL 2013",
-    "type": "Rosso",
-    "winery": "Vigneti Massa",
-    "grapes": "100% Barbera."
-  },
-  {
-    "id": 596,
-    "name": "RINCROCCA CASTELLI DI JESI VERDICCHIO 75CL 2022",
-    "type": "Bianco",
-    "winery": "La Staffa",
-    "grapes": "100% Verdicchio."
-  },
-  {
-    "id": 597,
-    "name": "SYLVANER VALLE ISARCO 2024 75CL",
-    "type": "Bianco",
-    "winery": "Valle Isarco",
-    "grapes": "100% Sylvaner."
-  },
-  {
-    "id": 598,
-    "name": "VIRGINIE T CHAMPAGNE 75CL TRANSMISSION",
-    "type": "Champagne",
-    "winery": "Virginie T.",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 599,
-    "name": "Alta Langa Bianco 150cl Coppo 2021",
-    "type": "Spumante",
-    "winery": "Coppo",
-    "grapes": "Chardonnay e Pinot Nero."
-  },
-  {
-    "id": 600,
-    "name": "RISERVA COPPO EXTRA BRUT 75CL 2020",
-    "type": "Spumante",
-    "winery": "Coppo",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 601,
-    "name": "ROGGIO DEL FILARE 75CL 2020",
-    "type": "Rosso",
-    "winery": "Velenosi",
-    "grapes": "Montepulciano e Sangiovese."
-  },
-  {
-    "id": 602,
-    "name": "LUDI OFFIDA DOCG ROSSO 2020 75CL",
-    "type": "Rosso",
-    "winery": "Velenosi",
-    "grapes": "Montepulciano, Cabernet Sauvignon, Merlot."
-  },
-  {
-    "id": 603,
-    "name": "OFFIDA PECORINO DOCG 2023 75CL",
-    "type": "Bianco",
-    "winery": "Velenosi",
-    "grapes": "100% Pecorino."
-  },
-  {
-    "id": 604,
-    "name": "NINFA SIBILLA ROSSO 75CL",
-    "type": "Rosso",
-    "winery": "Velenosi",
-    "grapes": "Montepulciano, Cabernet Sauvignon, Merlot, Syrah."
-  },
-  {
-    "id": 605,
-    "name": "CHIANTI CLASSICO CASTELLARE 2024 75CL",
-    "type": "Rosso",
-    "winery": "Castellare di Castellina",
-    "grapes": "Sangiovese e Canaiolo."
-  },
-  {
-    "id": 606,
-    "name": "CHIANTI CLASSICO CASTELLARE 2024 150CL",
-    "type": "Rosso",
-    "winery": "Castellare di Castellina",
-    "grapes": "Sangiovese e Canaiolo."
-  },
-  {
-    "id": 607,
-    "name": "CHAMPAGNE BRUT RESERV VOLLEREAUX 150CL",
-    "type": "Champagne",
-    "winery": "Vollereaux",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 608,
-    "name": "Amarone Rosso 2018 75cl Boni Alessandro",
-    "type": "Rosso",
-    "winery": "Boni Alessandro",
-    "grapes": "Corvina, Rondinella, Molinara."
-  },
-  {
-    "id": 609,
-    "name": "Ferrari Perle 150cl 2018 magnum",
-    "type": "Spumante",
-    "winery": "Ferrari",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 610,
-    "name": "CHATEAU PIADA 75CL BARSAC 2024",
-    "type": "Dolce/Liquoroso",
-    "winery": "Château Piada",
-    "grapes": "Semillon e Sauvignon Blanc."
-  },
-  {
-    "id": 611,
-    "name": "HERMON MOUNT WHITE 2023 GOLAN",
-    "type": "Bianco",
-    "winery": "Golan Heights Winery",
-    "grapes": "Blend di uve bianche locali."
-  },
-  {
-    "id": 612,
-    "name": "GUIDOALBERTO 3L 2023",
-    "type": "Rosso",
-    "winery": "Tenuta San Guido",
-    "grapes": "Cabernet Sauvignon e Merlot."
-  },
-  {
-    "id": 613,
-    "name": "Brunello Di Montalcino Rosso 2019 75cl Ciacci piccolomi pianrosso RISERVA",
-    "type": "Rosso",
-    "winery": "Ciacci Piccolomini d'Aragona",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 614,
-    "name": "Champagne Roederer collection 245 3L",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 615,
-    "name": "Baron De L Bianco 2022 150cl Baron De Ladoucette",
-    "type": "Bianco",
-    "winery": "Baron de Ladoucette",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 616,
-    "name": "POUILLY-FUISSE' 2023 75CL",
-    "type": "Bianco",
-    "winery": "Domaine locale",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 617,
-    "name": "Bellavista Alma Assemblage1 MAGNUM Bianco 150cl Moretti",
-    "type": "Spumante",
-    "winery": "Bellavista",
-    "grapes": "Chardonnay, Pinot Nero, Pinot Bianco."
-  },
-  {
-    "id": 618,
-    "name": "Barbaresco Rosso 2020 75cl Produttori Di Barbaresco",
-    "type": "Rosso",
-    "winery": "Produttori del Barbaresco",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 619,
-    "name": "ANNAMARIA CLEMENTI 2016 CL 75CL CA DEL BOSCO",
-    "type": "Spumante",
-    "winery": "Ca Del Bosco",
-    "grapes": "Chardonnay, Pinot Bianco, Pinot Nero."
-  },
-  {
-    "id": 620,
-    "name": "COPPO CHARDONNAY MONTERIOLO 2017 75CL",
-    "type": "Bianco",
-    "winery": "Coppo",
-    "grapes": "100% Chardonnay."
-  },
-  {
-    "id": 621,
-    "name": "TIGNANELLO 2022 150CL ANTINORI",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Tenuta Tignanello",
-    "grapes": "80% Sangiovese, 20% Cabernet."
-  },
-  {
-    "id": 622,
-    "name": "MUFFATO DELLA SALA 2023 UMBRIA IGT ANTINORI 75CL",
-    "type": "Dolce/Liquoroso",
-    "winery": "Marchesi Antinori - Castello della Sala",
-    "grapes": "Sauvignon Blanc, Grechetto, Traminer, Riesling."
-  },
-  {
-    "id": 623,
-    "name": "Villa Antinori Rosso 2022 150cl Antinori",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori",
-    "grapes": "Sangiovese, Cabernet Sauvignon, Merlot, Syrah."
-  },
-  {
-    "id": 624,
-    "name": "Marchesi Antinori Francia Corta Brut 75cl ROSE",
-    "type": "Spumante",
-    "winery": "Marchesi Antinori - Montenisa",
-    "grapes": "100% Pinot Nero."
-  },
-  {
-    "id": 625,
-    "name": "BAROLO PRUNOTTO 2021 150CL",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Prunotto",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 626,
-    "name": "Champagne Bianco 75cl Cristal 2016 ast",
-    "type": "Champagne",
-    "winery": "Louis Roederer",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 627,
-    "name": "Ripasso Monte Lodetta Rosso 2018 75cl Romano Dal Forno",
-    "type": "Rosso",
-    "winery": "Romano Dal Forno",
-    "grapes": "Corvina, Rondinella, Croatina, Oseleta."
-  },
-  {
-    "id": 628,
-    "name": "AMARONE DELLA VALPOLICELLA 2018 DAL FORNO ROMANO 75CL",
-    "type": "Rosso",
-    "winery": "Romano Dal Forno",
-    "grapes": "Corvina, Rondinella, Croatina, Oseleta."
-  },
-  {
-    "id": 629,
-    "name": "dom perignon 2013 Magnum ast",
-    "type": "Champagne",
-    "winery": "Dom Pérignon",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 630,
-    "name": "MIANI SAUVIGNON 75CL 2024",
-    "type": "Bianco",
-    "winery": "Miani",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 631,
-    "name": "MIANI MALVASIA DOC 75CL 2023",
-    "type": "Bianco",
-    "winery": "Miani",
-    "grapes": "100% Malvasia Istriana."
-  },
-  {
-    "id": 632,
-    "name": "MIANI SAUVIGNON SAURINT 2023 75CL",
-    "type": "Bianco",
-    "winery": "Miani",
-    "grapes": "100% Sauvignon Blanc."
-  },
-  {
-    "id": 633,
-    "name": "MIANI ROSSO DOC FRIULI 2022 75CL",
-    "type": "Rosso",
-    "winery": "Miani",
-    "grapes": "100% Merlot."
-  },
-  {
-    "id": 634,
-    "name": "CONFEZIONE BELLE EPOQUE 2 CALICI 2016",
-    "type": "Champagne",
-    "winery": "Perrier Jouët",
-    "grapes": "Chardonnay, Pinot Noir, Meunier."
-  },
-  {
-    "id": 635,
-    "name": "PELISSERO BARBARESCO 75CL NUBIOLA 2021",
-    "type": "Rosso",
-    "winery": "Pelissero",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 636,
-    "name": "PELISSERO BARBARESCO 150CL NUBIOLA 2020",
-    "type": "Rosso",
-    "winery": "Pelissero",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 637,
-    "name": "PELISSERO BARBERA D'ALBA DOC PIANI 2022 18LT",
-    "type": "Rosso",
-    "winery": "Pelissero",
-    "grapes": "100% Barbera."
-  },
-  {
-    "id": 638,
-    "name": "BIANCO DI NERA 75CL MILAZZO",
-    "type": "Spumante",
-    "winery": "Milazzo",
-    "grapes": "Nero d'Avola e Inzolia."
-  },
-  {
-    "id": 639,
-    "name": "FONDIRO' ROSSO 75CL MILAZZO",
-    "type": "Rosso",
-    "winery": "Milazzo",
-    "grapes": "100% Perricone."
-  },
-  {
-    "id": 640,
-    "name": "HENRY GIRAUD GRAND CRU 75CL",
-    "type": "Champagne",
-    "winery": "Henry Giraud",
-    "grapes": "Pinot Noir e Chardonnay."
-  },
-  {
-    "id": 641,
-    "name": "Guado Al Tasso Rosso 2022 75cl Antinori",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Guado al Tasso",
-    "grapes": "Cabernet Sauvignon, Merlot, Cabernet Franc."
-  },
-  {
-    "id": 642,
-    "name": "ROSSO DI MONTALCINO 2024 ANTINORI 75CL 2024",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - Pian Delle Vigne",
-    "grapes": "100% Sangiovese."
-  },
-  {
-    "id": 643,
-    "name": "SABAZIO ROSSO MONTEPULCIANO 2024 75CL",
-    "type": "Rosso",
-    "winery": "Marchesi Antinori - La Braccesca",
-    "grapes": "Prugnolo Gentile (Sangiovese) e Merlot."
-  },
-  {
-    "id": 644,
-    "name": "NEBBIOLO MASSOLINO 1,5L 2023",
-    "type": "Rosso",
-    "winery": "Massolino",
-    "grapes": "100% Nebbiolo."
-  },
-  {
-    "id": 645,
-    "name": "Barolo Vigna Rionda Riserva 2019 Rosso 75cl Massolino",
-    "type": "Rosso",
-    "winery": "Massolino",
-    "grapes": "100% Nebbiolo."
-  }
-];
-
-const typeColors = {
-  'Rosso': { stripe: '#7a1515', badge: '#c0392b', text: '#ffd5d5' },
-  'Bianco': { stripe: '#8a6a00', badge: '#c8a84b', text: '#fff8dc' },
-  'Champagne': { stripe: '#b8900a', badge: '#d4af37', text: '#fffacd' },
-  'Spumante': { stripe: '#1a5f7a', badge: '#4a90a4', text: '#d0f0ff' },
-  'Rosé': { stripe: '#8a2a4a', badge: '#d4688a', text: '#ffe0ec' },
-  'Distillato': { stripe: '#4a2e1a', badge: '#8B6349', text: '#f5deb3' },
-  'Dolce': { stripe: '#5a2a7a', badge: '#9B6B9B', text: '#e8d5f5' },
-};
-
-function getColor(type) {
-  const t = Object.keys(typeColors).find(k => type.toLowerCase().includes(k.toLowerCase())) || 'Rosso';
-  return typeColors[t] || typeColors['Rosso'];
-}
-
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function renderCard(w) {
-  const c = getColor(w.type);
-  return `<div class="card" data-type="${escHtml(w.type)}">
-    <div class="card-stripe" style="background:${c.stripe}"></div>
-    <div class="card-body">
-      <div class="card-id">V-${w.id}</div>
-      <div class="card-name">${escHtml(w.name)}</div>
-      <div class="card-divider"></div>
-      <div class="card-meta">
-        <div class="card-row">
-          <svg class="card-row-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8 2 5 6 5 10c0 5.5 7 12 7 12s7-6.5 7-12c0-4-3-8-7-8z"/></svg>
-          <span class="card-row-label">Tipo</span>
-          <span class="type-badge" style="color:${c.badge}">${escHtml(w.type)}</span>
+  <!-- Duplicates & Consolidation Report Modal -->
+  <div class="modal-backdrop" id="dupModal" onclick="if(event.target===this) closeDuplicatesModal()">
+    <div class="modal-box" style="max-width:860px;">
+      <div class="modal-header">
+        <div>
+          <h3>Report Consolidamento, Correzioni &amp; 28 Duplicati Accorpati</h3>
+          <div style="font-size:0.86rem;opacity:0.88;margin-top:3px;">
+            Dettaglio delle rettifiche eseguite sulle 479 righe iniziali
+          </div>
         </div>
-        <div class="card-row">
-          <svg class="card-row-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
-          <span class="card-row-label">Cantina</span>
-          <span class="card-row-value">${escHtml(w.winery)}</span>
+        <button class="modal-close" onclick="closeDuplicatesModal()">✕</button>
+      </div>
+      <div class="modal-body" id="dupModalBody"></div>
+    </div>
+  </div>
+
+  <!-- Add New Wine Modal -->
+  <div class="modal-backdrop" id="addWineModal" onclick="if(event.target===this) closeAddWineModal()">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <h3>Aggiungi Nuovo Vino al Catalogo</h3>
+          <div style="font-size:0.85rem;opacity:0.88;">Il vino verrà salvato nel browser ed esportato in CSV</div>
         </div>
-        <div class="card-row">
-          <svg class="card-row-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><circle cx="12" cy="15" r="3"/></svg>
-          <span class="card-row-label">Uvaggi</span>
-          <span class="card-row-value">${escHtml(w.grapes)}</span>
+        <button class="modal-close" onclick="closeAddWineModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="filters-grid" style="grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="filter-group">
+            <label>Nome Vino *</label>
+            <input type="text" id="newNome" style="padding:8px;border:1px solid var(--border-strong);border-radius:6px;" placeholder="es. Barolo Cannubi DOCG" />
+          </div>
+          <div class="filter-group">
+            <label>Produttore / Cantina *</label>
+            <input type="text" id="newProd" style="padding:8px;border:1px solid var(--border-strong);border-radius:6px;" placeholder="es. Giacomo Fenocchio" />
+          </div>
+          <div class="filter-group">
+            <label>Macro-Tipologia</label>
+            <select id="newMacro">
+              <option value="Bollicine">Bollicine</option>
+              <option value="Vino Bianco">Vino Bianco</option>
+              <option value="Vino Rosso" selected>Vino Rosso</option>
+              <option value="Vino Rosato">Vino Rosato</option>
+              <option value="Vino Dolce / Passito">Vino Dolce / Passito</option>
+              <option value="Distillato">Distillato</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Categoria Specifica</label>
+            <input type="text" id="newCat" style="padding:8px;border:1px solid var(--border-strong);border-radius:6px;" value="Rosso Fermo" />
+          </div>
+          <div class="filter-group">
+            <label>Nazione</label>
+            <input type="text" id="newNaz" style="padding:8px;border:1px solid var(--border-strong);border-radius:6px;" value="Italia" />
+          </div>
+          <div class="filter-group">
+            <label>Regione *</label>
+            <input type="text" id="newReg" style="padding:8px;border:1px solid var(--border-strong);border-radius:6px;" placeholder="es. Piemonte" />
+          </div>
+          <div class="filter-group">
+            <label>Zona / Sottozona / Cru</label>
+            <input type="text" id="newZona" style="padding:8px;border:1px solid var(--border-strong);border-radius:6px;" placeholder="es. Langhe - Barolo" />
+          </div>
+          <div class="filter-group">
+            <label>Denominazione</label>
+            <input type="text" id="newDenom" style="padding:8px;border:1px solid var(--border-strong);border-radius:6px;" placeholder="es. Barolo DOCG" />
+          </div>
+          <div class="filter-group">
+            <label>Annata</label>
+            <input type="text" id="newAnnata" style="padding:8px;border:1px solid var(--border-strong);border-radius:6px;" placeholder="es. 2020 o s.a." />
+          </div>
+          <div class="filter-group">
+            <label>Formato</label>
+            <select id="newFormato">
+              <option value="75 cl">75 cl</option>
+              <option value="150 cl (Magnum)">150 cl (Magnum)</option>
+              <option value="300 cl (Jéroboam)">300 cl (Jéroboam)</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Prezzo (€)</label>
+            <input type="number" id="newPrezzo" style="padding:8px;border:1px solid var(--border-strong);border-radius:6px;" placeholder="es. 90" />
+          </div>
+          <div class="filter-group">
+            <label>Uvaggio / Vitigni</label>
+            <input type="text" id="newUvaggio" style="padding:8px;border:1px solid var(--border-strong);border-radius:6px;" placeholder="es. Nebbiolo 100%" />
+          </div>
+        </div>
+        <div class="filter-group" style="margin-top:12px;">
+          <label>Affinamento</label>
+          <input type="text" id="newAffinamento" style="padding:8px;border:1px solid var(--border-strong);border-radius:6px;" placeholder="es. 24 mesi in botte grande di rovere" />
+        </div>
+        <div class="filter-group" style="margin-top:12px;">
+          <label>Note Organolettiche</label>
+          <input type="text" id="newNote" style="padding:8px;border:1px solid var(--border-strong);border-radius:6px;" placeholder="es. Rosa appassita, piccoli frutti rossi, spezie e tannino setoso." />
+        </div>
+        <div style="margin-top:18px;display:flex;justify-content:flex-end;gap:10px;">
+          <button class="btn btn-secondary" onclick="closeAddWineModal()">Annulla</button>
+          <button class="btn btn-primary" onclick="saveNewWine()">Salva nel Catalogo</button>
         </div>
       </div>
     </div>
-  </div>`;
-}
+  </div>
 
-const grid = document.getElementById('grid');
-const countEl = document.getElementById('count');
-const searchEl = document.getElementById('search');
-let activeFilter = 'all';
-let searchTerm = '';
+  <script src="vini_data.js"></script>
+  <script>
+    const STORAGE_PRICES_KEY = "carta_vini_vince_prices_v1";
+    const STORAGE_CUSTOM_WINES_KEY = "carta_vini_vince_custom_wines_v1";
 
-function render() {
-  const filtered = wines.filter(w => {
-    const matchFilter = activeFilter === 'all' || w.type.toLowerCase().includes(activeFilter.toLowerCase());
-    const q = searchTerm.toLowerCase();
-    const matchSearch = !q || 
-      w.name.toLowerCase().includes(q) || 
-      w.winery.toLowerCase().includes(q) || 
-      w.grapes.toLowerCase().includes(q) ||
-      String(w.id).includes(q);
-    return matchFilter && matchSearch;
-  });
+    let allWines = [];
+    let filteredWines = [];
+    let selectedMacro = "";
+    let currentView = "table";
 
-  countEl.textContent = filtered.length;
+    function loadCatalog() {
+      const savedPrices = JSON.parse(localStorage.getItem(STORAGE_PRICES_KEY) || "{}");
+      const customWines = JSON.parse(localStorage.getItem(STORAGE_CUSTOM_WINES_KEY) || "[]");
 
-  if (filtered.length === 0) {
-    grid.innerHTML = `<div class="no-results">
-      <div class="no-results-icon">🍷</div>
-      <h3>Nessun vino trovato</h3>
-      <p>Prova con un altro termine di ricerca</p>
-    </div>`;
-    return;
-  }
+      allWines = (window.WINE_CATALOG || []).map(w => {
+        const copy = Object.assign({}, w);
+        if (savedPrices.hasOwnProperty(copy.id)) {
+          copy.prezzo = savedPrices[copy.id];
+        }
+        return copy;
+      }).concat(customWines);
 
-  grid.innerHTML = filtered.map(renderCard).join('');
-}
+      document.getElementById("totalCount").textContent = allWines.length;
+      renderMacroPills();
+      populateDropdowns();
+      applyFilters();
+    }
 
-document.getElementById('filters').addEventListener('click', e => {
-  const btn = e.target.closest('.filter-btn');
-  if (!btn) return;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  activeFilter = btn.dataset.filter;
-  render();
-});
+    function badgeClassForMacro(macro) {
+      switch (macro) {
+        case "Bollicine": return "badge-bollicine";
+        case "Vino Bianco": return "badge-bianco";
+        case "Vino Rosso": return "badge-rosso";
+        case "Vino Rosato": return "badge-rosato";
+        case "Vino Dolce / Passito": return "badge-dolce";
+        case "Distillato": return "badge-distillato";
+        default: return "badge-format";
+      }
+    }
 
-searchEl.addEventListener('input', e => {
-  searchTerm = e.target.value;
-  render();
-});
+    function renderMacroPills() {
+      const counts = { "": allWines.length };
+      const order = ["Bollicine", "Vino Bianco", "Vino Rosso", "Vino Rosato", "Vino Dolce / Passito", "Distillato"];
+      const icons = {
+        "": "🍷 Tutte le Tipologie",
+        "Bollicine": "🥂 Bollicine",
+        "Vino Bianco": "🍋 Vini Bianchi",
+        "Vino Rosso": "🍒 Vini Rossi",
+        "Vino Rosato": "🌸 Vini Rosati",
+        "Vino Dolce / Passito": "🍯 Vini Dolci / Muffati",
+        "Distillato": "🥃 Distillati"
+      };
 
-// Theme toggle
-(function(){
-  const t = document.querySelector('[data-theme-toggle]');
-  const r = document.documentElement;
-  let d = r.getAttribute('data-theme') || 'dark';
-  const sunIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
-  const moonIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-  if(t) {
-    t.innerHTML = d === 'dark' ? sunIcon : moonIcon;
-    t.addEventListener('click', () => {
-      d = d === 'dark' ? 'light' : 'dark';
-      r.setAttribute('data-theme', d);
-      t.innerHTML = d === 'dark' ? sunIcon : moonIcon;
-    });
-  }
-})();
+      allWines.forEach(w => {
+        counts[w.macro_tipologia] = (counts[w.macro_tipologia] || 0) + 1;
+      });
 
-render();
-</script>
+      const bar = document.getElementById("macroBar");
+      const keys = [""].concat(order.filter(k => counts[k]));
+      bar.innerHTML = keys.map(k => {
+        const active = selectedMacro === k ? "active" : "";
+        return `<button class="macro-pill ${active}" onclick="selectMacro('${k}')">
+          <span>${icons[k] || k}</span>
+          <span class="count">${counts[k] || 0}</span>
+        </button>`;
+      }).join("");
+    }
+
+    function selectMacro(macro) {
+      selectedMacro = macro;
+      renderMacroPills();
+      populateDropdowns();
+      applyFilters();
+    }
+
+    function fillSelect(selectId, items, defaultLabel, keepValue = true) {
+      const sel = document.getElementById(selectId);
+      const prev = keepValue ? sel.value : "";
+      let html = `<option value="">${defaultLabel}</option>`;
+      items.forEach(item => {
+        const val = typeof item === "object" ? item.value : item;
+        const label = typeof item === "object" ? item.label : item;
+        const selected = val === prev ? "selected" : "";
+        html += `<option value="${escapeHtml(val)}" ${selected}>${escapeHtml(label)}</option>`;
+      });
+      sel.innerHTML = html;
+    }
+
+    function getBaseSubsetForDropdowns(ignoreField) {
+      const naz = ignoreField === "nazione" ? "" : document.getElementById("fNazione").value;
+      const reg = ignoreField === "regione" ? "" : document.getElementById("fRegione").value;
+      return allWines.filter(w => {
+        if (selectedMacro && w.macro_tipologia !== selectedMacro) return false;
+        if (naz && w.nazione !== naz) return false;
+        if (reg && w.regione !== reg) return false;
+        return true;
+      });
+    }
+
+    function countMapToSortedOptions(arr) {
+      const map = {};
+      arr.forEach(v => {
+        if (!v) return;
+        map[v] = (map[v] || 0) + 1;
+      });
+      return Object.keys(map).sort((a, b) => a.localeCompare(b, "it")).map(k => ({
+        value: k,
+        label: `${k} (${map[k]})`
+      }));
+    }
+
+    function populateDropdowns() {
+      const subsetMacro = allWines.filter(w => !selectedMacro || w.macro_tipologia === selectedMacro);
+      fillSelect("fCategoria", countMapToSortedOptions(subsetMacro.map(w => w.categoria)), "Tutte le categorie");
+      fillSelect("fNazione", countMapToSortedOptions(subsetMacro.map(w => w.nazione)), "Tutte le nazioni");
+
+      const subsetNaz = getBaseSubsetForDropdowns("regione");
+      fillSelect("fRegione", countMapToSortedOptions(subsetNaz.map(w => w.regione)), "Tutte le regioni");
+
+      const subsetReg = getBaseSubsetForDropdowns("");
+      fillSelect("fZona", countMapToSortedOptions(subsetReg.map(w => w.zona)), "Tutte le zone / cru");
+      fillSelect("fDenominazione", countMapToSortedOptions(subsetReg.map(w => w.denominazione)), "Tutte le denominazioni");
+      fillSelect("fProduttore", countMapToSortedOptions(subsetReg.map(w => w.produttore)), "Tutti i produttori");
+
+      const vitigniAll = [];
+      subsetReg.forEach(w => (w.vitigni || []).forEach(v => vitigniAll.push(v)));
+      fillSelect("fVitigno", countMapToSortedOptions(vitigniAll), "Tutti i vitigni");
+
+      // Annate ordinate dalla più recente
+      const annMap = {};
+      subsetReg.forEach(w => { annMap[w.annata] = (annMap[w.annata] || 0) + 1; });
+      const annKeys = Object.keys(annMap).sort((a, b) => {
+        if (a === "s.a.") return -1;
+        if (b === "s.a.") return 1;
+        return b.localeCompare(a, "it", { numeric: true });
+      });
+      fillSelect("fAnnata", annKeys.map(k => ({ value: k, label: `${k} (${annMap[k]})` })), "Tutte le annate");
+
+      fillSelect("fFormato", countMapToSortedOptions(subsetReg.map(w => w.formato)), "Tutti i formati");
+    }
+
+    function onNazioneChange() {
+      document.getElementById("fRegione").value = "";
+      document.getElementById("fZona").value = "";
+      populateDropdowns();
+      applyFilters();
+    }
+
+    function onRegioneChange() {
+      document.getElementById("fZona").value = "";
+      populateDropdowns();
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const q = document.getElementById("searchInput").value.trim().toLowerCase();
+      const cat = document.getElementById("fCategoria").value;
+      const naz = document.getElementById("fNazione").value;
+      const reg = document.getElementById("fRegione").value;
+      const zona = document.getElementById("fZona").value;
+      const denom = document.getElementById("fDenominazione").value;
+      const prod = document.getElementById("fProduttore").value;
+      const vit = document.getElementById("fVitigno").value;
+      const ann = document.getElementById("fAnnata").value;
+      const fmt = document.getElementById("fFormato").value;
+      const prz = document.getElementById("fPrezzo").value;
+      const sortBy = document.getElementById("fSort").value;
+
+      filteredWines = allWines.filter(w => {
+        if (selectedMacro && w.macro_tipologia !== selectedMacro) return false;
+        if (cat && w.categoria !== cat) return false;
+        if (naz && w.nazione !== naz) return false;
+        if (reg && w.regione !== reg) return false;
+        if (zona && w.zona !== zona) return false;
+        if (denom && w.denominazione !== denom) return false;
+        if (prod && w.produttore !== prod) return false;
+        if (vit && !(w.vitigni || []).includes(vit)) return false;
+        if (ann && w.annata !== ann) return false;
+        if (fmt && w.formato !== fmt) return false;
+
+        if (prz) {
+          const p = w.prezzo;
+          if (prz === "WITH_PRICE" && (p === null || p === "" || isNaN(p))) return false;
+          if (prz === "NO_PRICE" && p !== null && p !== "" && !isNaN(p)) return false;
+          if (prz.includes("-")) {
+            if (p === null || p === "" || isNaN(p)) return false;
+            const [minP, maxP] = prz.split("-").map(Number);
+            if (p < minP || p > maxP) return false;
+          }
+        }
+
+        if (q) {
+          const haystack = [
+            w.nome_vino,
+            w.produttore,
+            w.macro_tipologia,
+            w.categoria,
+            w.nazione,
+            w.regione,
+            w.zona,
+            w.denominazione,
+            w.uvaggio,
+            w.affinamento,
+            w.note_profilo,
+            w.referenza_originale,
+            w.annata,
+            w.formato
+          ].join(" ").toLowerCase();
+          const terms = q.split(/\s+/);
+          for (const t of terms) {
+            if (!haystack.includes(t)) return false;
+          }
+        }
+        return true;
+      });
+
+      sortFilteredWines(sortBy);
+      document.getElementById("shownCount").textContent = filteredWines.length;
+      renderActiveFilterChips();
+      renderContent();
+    }
+
+    function parseYearForSort(ann) {
+      if (!ann || ann === "s.a.") return -1;
+      const m = String(ann).match(/\d{4}/);
+      return m ? parseInt(m[0], 10) : 0;
+    }
+
+    function sortFilteredWines(sortBy) {
+      filteredWines.sort((a, b) => {
+        if (sortBy === "nome_asc") return a.nome_vino.localeCompare(b.nome_vino, "it");
+        if (sortBy === "prod_asc") return a.produttore.localeCompare(b.produttore, "it") || a.nome_vino.localeCompare(b.nome_vino, "it");
+        if (sortBy === "regione_asc") return a.regione.localeCompare(b.regione, "it") || a.zona.localeCompare(b.zona, "it") || a.nome_vino.localeCompare(b.nome_vino, "it");
+        if (sortBy === "prezzo_asc") {
+          const pa = (a.prezzo === null || a.prezzo === "") ? 999999 : Number(a.prezzo);
+          const pb = (b.prezzo === null || b.prezzo === "") ? 999999 : Number(b.prezzo);
+          return pa - pb || a.nome_vino.localeCompare(b.nome_vino, "it");
+        }
+        if (sortBy === "prezzo_desc") {
+          const pa = (a.prezzo === null || a.prezzo === "") ? -1 : Number(a.prezzo);
+          const pb = (b.prezzo === null || b.prezzo === "") ? -1 : Number(b.prezzo);
+          return pb - pa || a.nome_vino.localeCompare(b.nome_vino, "it");
+        }
+        if (sortBy === "annata_desc") {
+          return parseYearForSort(b.annata) - parseYearForSort(a.annata) || a.nome_vino.localeCompare(b.nome_vino, "it");
+        }
+        if (sortBy === "annata_asc") {
+          const ya = parseYearForSort(a.annata) <= 0 ? 9999 : parseYearForSort(a.annata);
+          const yb = parseYearForSort(b.annata) <= 0 ? 9999 : parseYearForSort(b.annata);
+          return ya - yb || a.nome_vino.localeCompare(b.nome_vino, "it");
+        }
+        return a.id - b.id;
+      });
+    }
+
+    function renderActiveFilterChips() {
+      const chips = [];
+      if (selectedMacro) chips.push({ label: `Tipologia: ${selectedMacro}`, clear: () => selectMacro("") });
+
+      const map = [
+        ["searchInput", "Ricerca"],
+        ["fCategoria", "Categoria"],
+        ["fNazione", "Nazione"],
+        ["fRegione", "Regione"],
+        ["fZona", "Zona"],
+        ["fDenominazione", "Denominazione"],
+        ["fProduttore", "Produttore"],
+        ["fVitigno", "Vitigno"],
+        ["fAnnata", "Annata"],
+        ["fFormato", "Formato"],
+        ["fPrezzo", "Prezzo"]
+      ];
+
+      map.forEach(([id, name]) => {
+        const el = document.getElementById(id);
+        if (el && el.value) {
+          chips.push({
+            label: `${name}: ${el.value}`,
+            clear: () => { el.value = ""; populateDropdowns(); applyFilters(); }
+          });
+        }
+      });
+
+      const container = document.getElementById("activeTags");
+      container.innerHTML = "";
+      chips.forEach(c => {
+        const span = document.createElement("span");
+        span.className = "filter-chip";
+        span.innerHTML = `${escapeHtml(c.label)} ✕`;
+        span.onclick = c.clear;
+        container.appendChild(span);
+      });
+    }
+
+    function resetAllFilters() {
+      selectedMacro = "";
+      document.getElementById("searchInput").value = "";
+      ["fCategoria", "fNazione", "fRegione", "fZona", "fDenominazione", "fProduttore", "fVitigno", "fAnnata", "fFormato", "fPrezzo"].forEach(id => {
+        document.getElementById(id).value = "";
+      });
+      document.getElementById("fSort").value = "carta";
+      renderMacroPills();
+      populateDropdowns();
+      applyFilters();
+    }
+
+    function setViewMode(mode) {
+      currentView = mode;
+      document.getElementById("btnViewTable").classList.toggle("active", mode === "table");
+      document.getElementById("btnViewCards").classList.toggle("active", mode === "cards");
+      document.getElementById("btnViewMenu").classList.toggle("active", mode === "menu");
+      renderContent();
+    }
+
+    function updateWinePrice(id, valStr) {
+      const clean = valStr.trim() === "" ? null : parseInt(valStr, 10);
+      const wine = allWines.find(w => w.id === id);
+      if (wine) {
+        wine.prezzo = isNaN(clean) ? null : clean;
+      }
+      const saved = JSON.parse(localStorage.getItem(STORAGE_PRICES_KEY) || "{}");
+      if (clean === null || isNaN(clean)) {
+        delete saved[id];
+      } else {
+        saved[id] = clean;
+      }
+      localStorage.setItem(STORAGE_PRICES_KEY, JSON.stringify(saved));
+    }
+
+    function renderContent() {
+      const area = document.getElementById("contentArea");
+      if (filteredWines.length === 0) {
+        area.innerHTML = `
+          <div style="background:#fff;padding:48px;text-align:center;border-radius:10px;border:1px solid var(--border);">
+            <div style="font-size:2.4rem;margin-bottom:10px;">🍷</div>
+            <h3 style="margin-bottom:6px;">Nessun vino corrisponde ai filtri selezionati</h3>
+            <p style="color:var(--text-muted);margin-bottom:16px;">Prova ad ampliare la ricerca o azzerare uno dei filtri attivi.</p>
+            <button class="btn btn-primary" onclick="resetAllFilters()">Mostra tutti i 451 vini</button>
+          </div>`;
+        return;
+      }
+
+      if (currentView === "table") {
+        renderTableView(area);
+      } else if (currentView === "cards") {
+        renderCardsView(area);
+      } else {
+        renderMenuView(area);
+      }
+    }
+
+    function renderTableView(area) {
+      const rowsHtml = filteredWines.map(w => {
+        const bClass = badgeClassForMacro(w.macro_tipologia);
+        const isSpecialFmt = w.formato !== "75 cl";
+        const hasPrice = w.prezzo !== null && w.prezzo !== "" && !isNaN(w.prezzo);
+        return `
+          <tr>
+            <td style="text-align:center;color:var(--text-muted);font-weight:600;">${w.id}</td>
+            <td onclick="openWineModal(${w.id})">
+              <div class="wine-name-cell">${escapeHtml(w.nome_vino)}</div>
+              <div class="wine-orig-sub">Ref: ${escapeHtml(w.referenza_originale)}</div>
+            </td>
+            <td class="producer-cell">${escapeHtml(w.produttore)}</td>
+            <td>
+              <span class="badge ${bClass}">${escapeHtml(w.macro_tipologia)}</span>
+              <div style="font-size:0.74rem;color:var(--text-muted);margin-top:4px;font-weight:600;">${escapeHtml(w.categoria)}</div>
+            </td>
+            <td>
+              <div class="region-main">${escapeHtml(w.regione)} <span style="font-weight:400;font-size:0.75rem;color:var(--text-muted);">(${escapeHtml(w.nazione)})</span></div>
+              <div class="zone-sub">📍 ${escapeHtml(w.zona)}</div>
+              <span class="denom-tag">${escapeHtml(w.denominazione)}</span>
+            </td>
+            <td style="text-align:center;font-weight:700;">${escapeHtml(w.annata)}</td>
+            <td style="text-align:center;">
+              <span class="badge badge-format ${isSpecialFmt ? 'special' : ''}">${escapeHtml(w.formato)}</span>
+            </td>
+            <td class="uvaggio-cell">
+              <div style="font-weight:600;">${escapeHtml(w.uvaggio)}</div>
+              <div style="font-size:0.74rem;color:var(--text-muted);margin-top:3px;">⏳ ${escapeHtml(w.affinamento)}</div>
+            </td>
+            <td class="profilo-cell">${escapeHtml(w.note_profilo)}</td>
+            <td style="text-align:right;">
+              <div class="price-input-wrap ${hasPrice ? 'has-price' : ''}" title="Inserisci o modifica il prezzo (€)">
+                <span>€</span>
+                <input
+                  type="number"
+                  class="price-input"
+                  value="${hasPrice ? w.prezzo : ''}"
+                  placeholder="—"
+                  onchange="updateWinePrice(${w.id}, this.value); this.parentElement.classList.toggle('has-price', this.value.trim() !== '')"
+                />
+              </div>
+            </td>
+          </tr>`;
+      }).join("");
+
+      area.innerHTML = `
+        <div class="table-wrapper">
+          <table class="wine-table">
+            <thead>
+              <tr>
+                <th style="width:46px;text-align:center;">#</th>
+                <th>Vino (Clicca per Scheda)</th>
+                <th>Produttore / Cantina</th>
+                <th>Tipologia &amp; Stile</th>
+                <th>Regione, Zona &amp; Denominazione</th>
+                <th style="text-align:center;">Annata</th>
+                <th style="text-align:center;">Formato</th>
+                <th>Uvaggio &amp; Affinamento</th>
+                <th>Profilo Organolettico</th>
+                <th style="text-align:right;">Prezzo (€)</th>
+              </tr>
+            </thead>
+            <tbody>${rowsHtml}</tbody>
+          </table>
+        </div>`;
+    }
+
+    function renderCardsView(area) {
+      const cardsHtml = filteredWines.map(w => {
+        const bClass = badgeClassForMacro(w.macro_tipologia);
+        const isSpecialFmt = w.formato !== "75 cl";
+        const priceLabel = (w.prezzo !== null && w.prezzo !== "") ? `€ ${w.prezzo}` : "Prezzo da definire";
+        return `
+          <div class="wine-card" onclick="openWineModal(${w.id})">
+            <div>
+              <div class="card-top">
+                <span class="badge ${bClass}">${escapeHtml(w.macro_tipologia)} • ${escapeHtml(w.categoria)}</span>
+                <span class="badge badge-format ${isSpecialFmt ? 'special' : ''}">${escapeHtml(w.formato)}</span>
+              </div>
+              <div class="card-title">${escapeHtml(w.nome_vino)}</div>
+              <div class="card-producer">🏛️ ${escapeHtml(w.produttore)} — <strong>${escapeHtml(w.annata)}</strong></div>
+              <div class="card-meta-list">
+                <div><strong>Origine:</strong> ${escapeHtml(w.regione)} (${escapeHtml(w.nazione)}) — ${escapeHtml(w.zona)}</div>
+                <div><strong>Denominazione:</strong> ${escapeHtml(w.denominazione)}</div>
+                <div><strong>Uvaggio:</strong> ${escapeHtml(w.uvaggio)}</div>
+                <div><strong>Affinamento:</strong> ${escapeHtml(w.affinamento)}</div>
+              </div>
+              <div class="card-note">“${escapeHtml(w.note_profilo)}”</div>
+            </div>
+            <div class="card-footer">
+              <span style="font-size:0.75rem;color:var(--text-muted);">#${w.id} • Scheda completa →</span>
+              <span class="card-price">${escapeHtml(priceLabel)}</span>
+            </div>
+          </div>`;
+      }).join("");
+
+      area.innerHTML = `<div class="cards-grid">${cardsHtml}</div>`;
+    }
+
+    function renderMenuView(area) {
+      // Group by Macro-Tipologia -> Regione
+      const groups = {};
+      filteredWines.forEach(w => {
+        if (!groups[w.macro_tipologia]) groups[w.macro_tipologia] = {};
+        const regKey = `${w.regione} (${w.nazione})`;
+        if (!groups[w.macro_tipologia][regKey]) groups[w.macro_tipologia][regKey] = [];
+        groups[w.macro_tipologia][regKey].push(w);
+      });
+
+      let sectionsHtml = "";
+      Object.keys(groups).forEach(macro => {
+        sectionsHtml += `<div class="menu-section-title"><span>${escapeHtml(macro)}</span></div>`;
+        const regMap = groups[macro];
+        Object.keys(regMap).forEach(regKey => {
+          sectionsHtml += `<div class="menu-region-title">📍 ${escapeHtml(regKey)}</div>`;
+          regMap[regKey].forEach(w => {
+            const fmtBadge = w.formato !== "75 cl" ? ` • <strong>[${escapeHtml(w.formato)}]</strong>` : "";
+            const priceStr = (w.prezzo !== null && w.prezzo !== "") ? `€ ${w.prezzo}` : "—";
+            sectionsHtml += `
+              <div class="menu-item" onclick="openWineModal(${w.id})">
+                <div class="menu-item-left">
+                  <div class="menu-wine-title">${escapeHtml(w.nome_vino)} — <span style="font-weight:600;color:var(--accent);">${escapeHtml(w.produttore)}</span>${fmtBadge}</div>
+                  <div class="menu-wine-sub">${escapeHtml(w.denominazione)} • ${escapeHtml(w.zona)} • <em>${escapeHtml(w.uvaggio)}</em></div>
+                </div>
+                <div class="menu-item-right">
+                  <span class="menu-vintage">${escapeHtml(w.annata)}</span>
+                  <span class="menu-price">${escapeHtml(priceStr)}</span>
+                </div>
+              </div>`;
+          });
+        });
+      });
+
+      area.innerHTML = `
+        <div class="menu-view">
+          <div style="display:flex;justify-content:flex-end;margin-bottom:10px;" class="no-print">
+            <button class="btn btn-primary" onclick="window.print()">🖨️ Stampa / Salva Carta in PDF</button>
+          </div>
+          <div class="menu-header">
+            <h2>Carta dei Vini</h2>
+            <p style="color:var(--text-muted);font-style:italic;margin-top:4px;">Selezione di Cantina • ${filteredWines.length} Etichette</p>
+          </div>
+          ${sectionsHtml}
+        </div>`;
+    }
+
+    function openWineModal(id) {
+      const w = allWines.find(x => x.id === id);
+      if (!w) return;
+      const bClass = badgeClassForMacro(w.macro_tipologia);
+
+      document.getElementById("modalBadges").innerHTML = `
+        <span class="badge ${bClass}">${escapeHtml(w.macro_tipologia)}</span>
+        <span class="badge badge-format">${escapeHtml(w.categoria)}</span>
+        <span class="badge badge-format">${escapeHtml(w.formato)}</span>
+      `;
+      document.getElementById("modalTitle").textContent = w.nome_vino;
+      document.getElementById("modalSubtitle").textContent = `${w.produttore} — Annata ${w.annata}`;
+
+      const hasPrice = w.prezzo !== null && w.prezzo !== "";
+      document.getElementById("modalBody").innerHTML = `
+        <div class="detail-grid">
+          <div class="detail-box">
+            <div class="lbl">Nazione &amp; Regione</div>
+            <div class="val">${escapeHtml(w.regione)} (${escapeHtml(w.nazione)})</div>
+          </div>
+          <div class="detail-box">
+            <div class="lbl">Zona / Sottozona / Cru</div>
+            <div class="val">${escapeHtml(w.zona)}</div>
+          </div>
+          <div class="detail-box">
+            <div class="lbl">Denominazione</div>
+            <div class="val">${escapeHtml(w.denominazione)}</div>
+          </div>
+          <div class="detail-box">
+            <div class="lbl">Prezzo Carta (€)</div>
+            <div class="val" style="color:var(--accent);font-size:1.1rem;">${hasPrice ? '€ ' + w.prezzo : 'Non inserito (modificabile in tabella)'}</div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h4>🍇 Uvaggio / Vitigni</h4>
+          <div><strong>${escapeHtml(w.uvaggio)}</strong></div>
+        </div>
+
+        <div class="detail-section">
+          <h4>⏳ Vinificazione &amp; Affinamento</h4>
+          <div>${escapeHtml(w.affinamento)}</div>
+        </div>
+
+        <div class="detail-section">
+          <h4>👃 Profilo Organolettico &amp; Caratteristiche</h4>
+          <div>${escapeHtml(w.note_profilo)}</div>
+        </div>
+
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-top:14px;padding-top:10px;border-top:1px solid var(--border);">
+          <strong>Voce Originale nel File:</strong> ${escapeHtml(w.referenza_originale)} (Riga #${w.row_num || w.id})<br/>
+          <strong>Stato Consolidamento:</strong> ${escapeHtml(w.note_consolidamento || 'Scheda verificata')}
+        </div>
+      `;
+
+      document.getElementById("wineModal").classList.add("open");
+    }
+
+    function closeWineModal() {
+      document.getElementById("wineModal").classList.remove("open");
+    }
+
+    function openDuplicatesModal() {
+      const dups = window.REMOVED_DUPLICATES || [];
+      const rows = dups.map((d, i) => `
+        <tr>
+          <td style="padding:7px;border-bottom:1px solid var(--border);text-align:center;">${i + 1}</td>
+          <td style="padding:7px;border-bottom:1px solid var(--border);font-weight:600;">${escapeHtml(d.referenza)}</td>
+          <td style="padding:7px;border-bottom:1px solid var(--border);">${escapeHtml(d.produttore)}</td>
+          <td style="padding:7px;border-bottom:1px solid var(--border);text-align:center;">${escapeHtml(d.formato)}</td>
+          <td style="padding:7px;border-bottom:1px solid var(--border);text-align:center;">${escapeHtml(d.annata)}</td>
+          <td style="padding:7px;border-bottom:1px solid var(--border);text-align:center;">Riga #${d.riga_originale} → accorpata a Riga #${d.accorpata_con_riga}</td>
+        </tr>
+      `).join("");
+
+      document.getElementById("dupModalBody").innerHTML = `
+        <div class="detail-section" style="margin-bottom:16px;">
+          <h4>✅ Sintesi degli Interventi di Bonifica</h4>
+          <ul style="padding-left:18px;font-size:0.86rem;line-height:1.6;">
+            <li><strong>100% Informazioni Completate:</strong> Aggiunti Produttore, Nazione, Regione, Sottozona/Cru, Denominazione ufficiale, Uvaggio preciso, Affinamento e Note organolettiche per tutte le 451 referenze uniche (eliminate tutte le diciture <em>"Non individuata"</em> e <em>"(probabile)"</em>).</li>
+            <li><strong>Correzioni di Categoria:</strong> Riclassificati correttamente <em>Château d'Yquem 1996</em> (da Rosso a Vino Dolce/Muffato), <em>Calafuria Antinori</em> (da Rosso a Rosato), <em>Pol Roger Sir Winston Churchill</em>, <em>Monterossa Cabochon</em>, <em>Barone Pizzini Animante</em>, <em>Erpacrife</em>, <em>Villa Rinaldi Rosé Rosa</em> (da Rosso a Bollicine), <em>Amarone e Ripasso Villa Rinaldi</em> (da Trento DOC a Valpolicella/Veneto) e tutti i Franciacorta/Trento DOC/Metodo Classico che erano finiti sotto "Bianco fermo".</li>
+            <li><strong>28 Duplicati Esatti Rimossi:</strong> Accorpate le voci identiche per vino, annata e formato presenti due volte nella lista grezza, mantenendo invece separate tutte le verticali d'annata e i formati speciali (Magnum 150 cl, Jéroboam 300 cl, Salmanazar 900 cl).</li>
+          </ul>
+        </div>
+        <h4 style="margin-bottom:8px;font-size:0.9rem;color:var(--accent);">Elenco delle 28 Righe Duplicate Accorpate:</h4>
+        <div style="overflow-x:auto;border:1px solid var(--border);border-radius:8px;">
+          <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+            <thead>
+              <tr style="background:#3d121d;color:#fff;">
+                <th style="padding:8px;">#</th>
+                <th style="padding:8px;text-align:left;">Referenza Duplicata</th>
+                <th style="padding:8px;text-align:left;">Produttore</th>
+                <th style="padding:8px;">Formato</th>
+                <th style="padding:8px;">Annata</th>
+                <th style="padding:8px;">Azione</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      `;
+      document.getElementById("dupModal").classList.add("open");
+    }
+
+    function closeDuplicatesModal() {
+      document.getElementById("dupModal").classList.remove("open");
+    }
+
+    function openAddWineModal() {
+      document.getElementById("addWineModal").classList.add("open");
+    }
+
+    function closeAddWineModal() {
+      document.getElementById("addWineModal").classList.remove("open");
+    }
+
+    function saveNewWine() {
+      const nome = document.getElementById("newNome").value.trim();
+      const prod = document.getElementById("newProd").value.trim();
+      const reg = document.getElementById("newReg").value.trim();
+      if (!nome || !prod || !reg) {
+        alert("Inserisci almeno Nome Vino, Produttore e Regione.");
+        return;
+      }
+      const przVal = document.getElementById("newPrezzo").value.trim();
+      const newW = {
+        id: allWines.length + 1,
+        nome_vino: nome,
+        produttore: prod,
+        macro_tipologia: document.getElementById("newMacro").value,
+        categoria: document.getElementById("newCat").value.trim() || "Vino",
+        nazione: document.getElementById("newNaz").value.trim() || "Italia",
+        regione: reg,
+        zona: document.getElementById("newZona").value.trim() || reg,
+        denominazione: document.getElementById("newDenom").value.trim() || "DOC / IGT",
+        annata: document.getElementById("newAnnata").value.trim() || "s.a.",
+        formato: document.getElementById("newFormato").value,
+        prezzo: przVal ? parseInt(przVal, 10) : null,
+        uvaggio: document.getElementById("newUvaggio").value.trim() || "Blend aziendale",
+        vitigni: [document.getElementById("newUvaggio").value.trim() || "Blend"],
+        affinamento: document.getElementById("newAffinamento").value.trim() || "Affinamento tradizionale",
+        note_profilo: document.getElementById("newNote").value.trim() || "Aggiunto manualmente a catalogo.",
+        referenza_originale: nome,
+        note_consolidamento: "Aggiunto manualmente dall'utente"
+      };
+
+      const custom = JSON.parse(localStorage.getItem(STORAGE_CUSTOM_WINES_KEY) || "[]");
+      custom.push(newW);
+      localStorage.setItem(STORAGE_CUSTOM_WINES_KEY, JSON.stringify(custom));
+
+      closeAddWineModal();
+      loadCatalog();
+    }
+
+    function csvEscape(val) {
+      const s = val === null || val === undefined ? "" : String(val);
+      if (s.includes(",") || s.includes('"') || s.includes("\n")) {
+        return '"' + s.replace(/"/g, '""') + '"';
+      }
+      return s;
+    }
+
+    function exportUpdatedCSV() {
+      const headers = [
+        "ID", "Nome Vino", "Produttore / Cantina", "Macro-Tipologia", "Categoria Specifica",
+        "Nazione", "Regione", "Zona / Sottozona / Cru", "Denominazione", "Formato",
+        "Annata", "Prezzo (€)", "Uvaggio / Vitigni", "Affinamento", "Profilo Organolettico",
+        "Referenza Originale", "Note di Consolidamento"
+      ];
+      const lines = [headers.map(csvEscape).join(",")];
+      const source = filteredWines.length < allWines.length
+        ? (confirm(`Vuoi esportare solo i ${filteredWines.length} vini attualmente filtrati?\n(Premi Annulla per esportare tutti i ${allWines.length} vini del catalogo)`) ? filteredWines : allWines)
+        : allWines;
+
+      source.forEach(w => {
+        lines.push([
+          w.id, w.nome_vino, w.produttore, w.macro_tipologia, w.categoria,
+          w.nazione, w.regione, w.zona, w.denominazione, w.formato,
+          w.annata, w.prezzo !== null && w.prezzo !== "" ? w.prezzo : "",
+          w.uvaggio, w.affinamento, w.note_profilo, w.referenza_originale, w.note_consolidamento
+        ].map(csvEscape).join(","));
+      });
+
+      const blob = new Blob(["\uFEFF" + lines.join("\r\n")], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "catalogo_vini_completo_aggiornato.csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    window.addEventListener("DOMContentLoaded", loadCatalog);
+  </script>
 </body>
 </html>
